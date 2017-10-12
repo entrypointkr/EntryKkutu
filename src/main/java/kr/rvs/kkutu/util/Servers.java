@@ -7,18 +7,18 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.URL;
 
 /**
  * Created by Junhyeong Lim on 2017-10-02.
  */
 public enum Servers {
-    KKUTU_IO("ws://kkutu.io", 21000, "끄투리오"),
-    KKUTU_COKR("ws://ws.kkutu.co.kr", 8080, "끄투코리아")
-    ;
+    KKUTU_IO("http://kkutu.io/", "끄투리오"),
+    KKUTU_COKR("http://kkutu.co.kr/", "끄투코리아");
     private final String url;
-    private final int port;
     private final String name;
 
     private static String getToken(String name) {
@@ -35,26 +35,41 @@ public enum Servers {
         return token;
     }
 
-    Servers(String url, int port, String name) {
+
+    Servers(String url, String name) {
         this.url = url;
-        this.port = port;
         this.name = name;
     }
 
-    public URI toURI() {
+    public URI toURI(int server) {
         try {
-            return new URI(String.format("%s:%d/%s", url, port, getToken(name)));
-        } catch (URISyntaxException e) {
-            throw new IllegalStateException(e);
+            URL url = getURL(server);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+
+            try (BufferedReader in = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()))) {
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                String tag = "<span id=\"URL\">";
+                String parse = response.substring(response.indexOf(tag));
+                return new URI(parse.substring(tag.length(), parse.indexOf("</span>")));
+            }
+        } catch (Exception ex) {
+            throw new IllegalStateException(ex);
         }
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public int getPort() {
-        return port;
+    public URL getURL(int server) {
+        try {
+            return new URL(url + "?server=" + server);
+        } catch (MalformedURLException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     public String getName() {

@@ -17,13 +17,6 @@ public class Static {
     }
 
     public static <T> Optional<T> cast(Object object, Class<T> aClass) {
-        Optional<T> ret = Optional.empty();
-        try {
-            if (aClass.isInstance(object))
-                ret = Optional.of((T) object);
-        } catch (Exception ex) {
-            // Ignore
-        }
-        return ret;
+        return Optional.ofNullable(aClass.isInstance(object) ? (T) object : null);
     }
 }

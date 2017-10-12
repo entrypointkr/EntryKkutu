@@ -1,8 +1,5 @@
 package kr.rvs.kkutu.network;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Module;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -16,11 +13,6 @@ import io.netty.handler.codec.http.HttpClientCodec;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.websocketx.WebSocketClientHandshakerFactory;
 import io.netty.handler.codec.http.websocketx.WebSocketVersion;
-import kr.rvs.kkutu.gui.LobbyController;
-import kr.rvs.kkutu.holder.RoomHolder;
-import kr.rvs.kkutu.holder.UserHolder;
-import kr.rvs.kkutu.network.handler.ChatHandler;
-import kr.rvs.kkutu.network.handler.UpdateHandler;
 import kr.rvs.kkutu.util.Servers;
 
 import java.net.URI;
@@ -29,18 +21,23 @@ import java.net.URI;
  * Created by Junhyeong Lim on 2017-10-02.
  */
 public class WebSocketClient extends Connection {
+    private final URI uri;
     private final Servers server;
     private final PacketManager manager;
 
-    public WebSocketClient(Servers server, PacketManager manager) {
-        super(server.getPort());
+    public WebSocketClient(Servers server, URI uri, PacketManager manager) {
+        super(uri.getPort());
+        this.uri = uri;
         this.server = server;
         this.manager = manager;
     }
 
+    public WebSocketClient(Servers server, PacketManager manager) {
+        this(server, server.toURI(0), manager);
+    }
+
     @Override
     public void run0() throws Exception {
-        URI uri = server.toURI();
         EventLoopGroup group = new NioEventLoopGroup();
         try {
             final WebSocketClientHandler handler = new WebSocketClientHandler(

@@ -1,6 +1,5 @@
 package kr.rvs.kkutu.game;
 
-import com.google.gson.JsonObject;
 import kr.rvs.kkutu.gson.JsonObjectWrapper;
 
 /**
