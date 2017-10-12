@@ -1,0 +1,1784 @@
+{
+  "id": "guest__09T9qaHSQLftDeprPrQweXKK5MWF7KrX",
+  "guest": true,
+  "playTime": 0,
+  "users": {
+    "guest__SdAljfYEDrD7POVtXxjuOZLA4QKZdeYv": {
+      "id": "guest__SdAljfYEDrD7POVtXxjuOZLA4QKZdeYv",
+      "guest": true,
+      "game": {
+        "ready": false,
+        "team": 0,
+        "practice": 0
+      },
+      "profile": {
+        "id": "SdAljfYEDrD7POVtXxjuOZLA4QKZdeYv",
+        "title": "GUEST3052",
+        "image": "/img/kkutu/guest.png"
+      },
+      "place": 0,
+      "data": {
+        "score": 0,
+        "playTime": 0,
+        "connectDate": 0,
+        "record": {
+          "EKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "CSQ": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KCW": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KTY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ETY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KAP": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "HUN": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "EDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSS": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESS": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "money": 0,
+      "equip": {}
+    },
+    "guest__DBZ9FzDzPjw6_MDfdjpGB8Q4ADDpQMkp": {
+      "id": "guest__DBZ9FzDzPjw6_MDfdjpGB8Q4ADDpQMkp",
+      "guest": true,
+      "game": {
+        "ready": false,
+        "team": 0,
+        "practice": 0
+      },
+      "profile": {
+        "id": "DBZ9FzDzPjw6_MDfdjpGB8Q4ADDpQMkp",
+        "title": "GUEST9744",
+        "image": "/img/kkutu/guest.png"
+      },
+      "place": 0,
+      "data": {
+        "score": 0,
+        "playTime": 0,
+        "connectDate": 0,
+        "record": {
+          "EKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "CSQ": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KCW": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KTY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ETY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KAP": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "HUN": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "EDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSS": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESS": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "money": 0,
+      "equip": {}
+    },
+    "guest__FUpOPH8S8ruIL03fc_7bQ9983G0f0KGI": {
+      "id": "guest__FUpOPH8S8ruIL03fc_7bQ9983G0f0KGI",
+      "guest": true,
+      "game": {
+        "ready": false,
+        "team": 0,
+        "practice": 0
+      },
+      "profile": {
+        "id": "FUpOPH8S8ruIL03fc_7bQ9983G0f0KGI",
+        "title": "GUEST3104",
+        "image": "/img/kkutu/guest.png"
+      },
+      "place": 0,
+      "data": {
+        "score": 0,
+        "playTime": 0,
+        "connectDate": 0,
+        "record": {
+          "EKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "CSQ": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KCW": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KTY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ETY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KAP": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "HUN": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "EDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSS": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESS": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "money": 0,
+      "equip": {}
+    },
+    "guest__s8Eu6QUDsy6ywqzg3X_gExFeXs4bsB8E": {
+      "id": "guest__s8Eu6QUDsy6ywqzg3X_gExFeXs4bsB8E",
+      "guest": true,
+      "game": {
+        "ready": false,
+        "team": 0,
+        "practice": 0
+      },
+      "profile": {
+        "id": "s8Eu6QUDsy6ywqzg3X_gExFeXs4bsB8E",
+        "title": "GUEST2731",
+        "image": "/img/kkutu/guest.png"
+      },
+      "place": 0,
+      "data": {
+        "score": 0,
+        "playTime": 0,
+        "connectDate": 0,
+        "record": {
+          "EKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "CSQ": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KCW": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KTY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ETY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KAP": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "HUN": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "EDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSS": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESS": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "money": 0,
+      "equip": {}
+    },
+    "guest__bns66GfWroeBWySZlh2noWkglXrWuof-": {
+      "id": "guest__bns66GfWroeBWySZlh2noWkglXrWuof-",
+      "guest": true,
+      "game": {
+        "ready": false,
+        "team": 0,
+        "practice": 0
+      },
+      "profile": {
+        "id": "bns66GfWroeBWySZlh2noWkglXrWuof-",
+        "title": "GUEST6397",
+        "image": "/img/kkutu/guest.png"
+      },
+      "place": 0,
+      "data": {
+        "score": 0,
+        "playTime": 0,
+        "connectDate": 0,
+        "record": {
+          "EKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "CSQ": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KCW": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KTY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ETY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KAP": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "HUN": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "EDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSS": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESS": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "money": 0,
+      "equip": {}
+    },
+    "guest__gF5je_CtxC6AYj-Fi8-6ZKjYkwntAUcL": {
+      "id": "guest__gF5je_CtxC6AYj-Fi8-6ZKjYkwntAUcL",
+      "guest": true,
+      "game": {
+        "ready": false,
+        "team": 0,
+        "practice": 0
+      },
+      "profile": {
+        "id": "gF5je_CtxC6AYj-Fi8-6ZKjYkwntAUcL",
+        "title": "GUEST1623",
+        "image": "/img/kkutu/guest.png"
+      },
+      "place": 0,
+      "data": {
+        "score": 0,
+        "playTime": 0,
+        "connectDate": 0,
+        "record": {
+          "EKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "CSQ": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KCW": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KTY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ETY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KAP": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "HUN": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "EDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSS": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESS": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "money": 0,
+      "equip": {}
+    },
+    "guest__ZqoBSdY5m0kZ_p33czxIgn5SqM41gXiQ": {
+      "id": "guest__ZqoBSdY5m0kZ_p33czxIgn5SqM41gXiQ",
+      "guest": true,
+      "game": {
+        "ready": false,
+        "team": 0,
+        "practice": 0
+      },
+      "profile": {
+        "id": "ZqoBSdY5m0kZ_p33czxIgn5SqM41gXiQ",
+        "title": "GUEST1567",
+        "image": "/img/kkutu/guest.png"
+      },
+      "place": 0,
+      "data": {
+        "score": 185,
+        "playTime": 0,
+        "connectDate": 11,
+        "record": {
+          "EKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSH": [
+            1,
+            0,
+            185,
+            385932
+          ],
+          "CSQ": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KCW": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KTY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ETY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KAP": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "HUN": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "EDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSS": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESS": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "money": 3,
+      "equip": {}
+    },
+    "guest__qQn5IB0x_kaDNrbREDGqxpneoMZHRzS3": {
+      "id": "guest__qQn5IB0x_kaDNrbREDGqxpneoMZHRzS3",
+      "guest": true,
+      "game": {
+        "ready": false,
+        "team": 0,
+        "practice": 0
+      },
+      "profile": {
+        "id": "qQn5IB0x_kaDNrbREDGqxpneoMZHRzS3",
+        "title": "GUEST3484",
+        "image": "/img/kkutu/guest.png"
+      },
+      "place": 0,
+      "data": {
+        "score": 0,
+        "playTime": 0,
+        "connectDate": 0,
+        "record": {
+          "EKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "CSQ": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KCW": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KTY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ETY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KAP": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "HUN": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "EDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSS": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESS": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "money": 0,
+      "equip": {}
+    },
+    "guest__qs6ctyEJK6Ig9qxfAnJauLUPpGVUXnSF": {
+      "id": "guest__qs6ctyEJK6Ig9qxfAnJauLUPpGVUXnSF",
+      "guest": true,
+      "game": {
+        "ready": false,
+        "team": 0,
+        "practice": 0
+      },
+      "profile": {
+        "id": "qs6ctyEJK6Ig9qxfAnJauLUPpGVUXnSF",
+        "title": "GUEST2739",
+        "image": "/img/kkutu/guest.png"
+      },
+      "place": 0,
+      "data": {
+        "score": 0,
+        "playTime": 0,
+        "connectDate": 0,
+        "record": {
+          "EKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "CSQ": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KCW": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KTY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ETY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KAP": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "HUN": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "EDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSS": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESS": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "money": 0,
+      "equip": {}
+    },
+    "guest__cssCVxa8tnUEeYuO1tnpyU8IwjuIBkM0": {
+      "id": "guest__cssCVxa8tnUEeYuO1tnpyU8IwjuIBkM0",
+      "guest": true,
+      "game": {
+        "ready": false,
+        "team": 0,
+        "practice": 0
+      },
+      "profile": {
+        "id": "cssCVxa8tnUEeYuO1tnpyU8IwjuIBkM0",
+        "title": "GUEST3387",
+        "image": "/img/kkutu/guest.png"
+      },
+      "place": 0,
+      "data": {
+        "score": 0,
+        "playTime": 0,
+        "connectDate": 0,
+        "record": {
+          "EKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "CSQ": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KCW": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KTY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ETY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KAP": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "HUN": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "EDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSS": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESS": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "money": 0,
+      "equip": {}
+    },
+    "guest__pwkBeEhXk2MKaDfTN_h-kldcs5fdsqOT": {
+      "id": "guest__pwkBeEhXk2MKaDfTN_h-kldcs5fdsqOT",
+      "guest": true,
+      "game": {
+        "ready": false,
+        "team": 0,
+        "practice": 0
+      },
+      "profile": {
+        "id": "pwkBeEhXk2MKaDfTN_h-kldcs5fdsqOT",
+        "title": "GUEST4463",
+        "image": "/img/kkutu/guest.png"
+      },
+      "place": 542,
+      "data": {
+        "score": 6,
+        "playTime": 0,
+        "connectDate": 12,
+        "record": {
+          "EKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSH": [
+            0,
+            0,
+            6,
+            284678
+          ],
+          "CSQ": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KCW": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KTY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ETY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KAP": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "HUN": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "EDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSS": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESS": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "money": 0,
+      "equip": {}
+    },
+    "guest__UarHTlG7z0yubZn9SakXL5LDH48rtiHe": {
+      "id": "guest__UarHTlG7z0yubZn9SakXL5LDH48rtiHe",
+      "guest": true,
+      "game": {
+        "ready": false,
+        "team": 0,
+        "practice": 0
+      },
+      "profile": {
+        "id": "UarHTlG7z0yubZn9SakXL5LDH48rtiHe",
+        "title": "GUEST1249",
+        "image": "/img/kkutu/guest.png"
+      },
+      "place": 544,
+      "data": {
+        "score": 0,
+        "playTime": 0,
+        "connectDate": 0,
+        "record": {
+          "EKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "CSQ": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KCW": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KTY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ETY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KAP": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "HUN": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "EDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSS": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESS": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "money": 0,
+      "equip": {}
+    },
+    "guest__77IsZd_uZxTnppKLejOak9_GNO_WT-vE": {
+      "id": "guest__77IsZd_uZxTnppKLejOak9_GNO_WT-vE",
+      "guest": true,
+      "game": {
+        "ready": false,
+        "team": 0,
+        "practice": 0
+      },
+      "profile": {
+        "id": "77IsZd_uZxTnppKLejOak9_GNO_WT-vE",
+        "title": "GUEST2227",
+        "image": "/img/kkutu/guest.png"
+      },
+      "place": 544,
+      "data": {
+        "score": 0,
+        "playTime": 0,
+        "connectDate": 0,
+        "record": {
+          "EKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "CSQ": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KCW": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KTY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ETY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KAP": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "HUN": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "EDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSS": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESS": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "money": 0,
+      "equip": {}
+    },
+    "guest__09T9qaHSQLftDeprPrQweXKK5MWF7KrX": {
+      "id": "guest__09T9qaHSQLftDeprPrQweXKK5MWF7KrX",
+      "guest": true,
+      "game": {
+        "ready": false,
+        "team": 0,
+        "practice": 0
+      },
+      "profile": {
+        "id": "09T9qaHSQLftDeprPrQweXKK5MWF7KrX",
+        "title": "GUEST1506",
+        "image": "/img/kkutu/guest.png"
+      },
+      "place": 0,
+      "data": {
+        "score": 0,
+        "playTime": 0,
+        "connectDate": 0,
+        "record": {
+          "EKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KKT": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSH": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "CSQ": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KCW": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KTY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ETY": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KAP": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "HUN": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "EDA": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "KSS": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "ESS": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "money": 0,
+      "equip": {}
+    }
+  },
+  "rooms": {
+    "542": {
+      "id": 542,
+      "channel": "1",
+      "title": "회원님의 방",
+      "password": false,
+      "limit": 8,
+      "mode": 3,
+      "round": 5,
+      "time": 60,
+      "master": "guest__pwkBeEhXk2MKaDfTN_h-kldcs5fdsqOT",
+      "players": [
+        "guest__pwkBeEhXk2MKaDfTN_h-kldcs5fdsqOT",
+        {
+          "id": 822059637,
+          "robot": true,
+          "game": {
+            "team": 0,
+            "score": 418,
+            "bonus": 0,
+            "item": [],
+            "wpc": []
+          },
+          "data": {
+            "score": 10000
+          },
+          "place": 542,
+          "target": null,
+          "equip": {
+            "robot": true
+          },
+          "level": 2,
+          "ready": true
+        },
+        {
+          "id": 999268299,
+          "robot": true,
+          "game": {
+            "team": 0,
+            "score": 329,
+            "bonus": 0,
+            "item": [],
+            "wpc": []
+          },
+          "data": {
+            "score": 10000
+          },
+          "place": 542,
+          "target": null,
+          "equip": {
+            "robot": true
+          },
+          "level": 2,
+          "ready": true
+        },
+        {
+          "id": 973403902,
+          "robot": true,
+          "game": {
+            "team": 0,
+            "score": 419,
+            "bonus": 0,
+            "item": [],
+            "wpc": []
+          },
+          "data": {
+            "score": 10000
+          },
+          "place": 542,
+          "target": null,
+          "equip": {
+            "robot": true
+          },
+          "level": 2,
+          "ready": true
+        },
+        {
+          "id": 825375408,
+          "robot": true,
+          "game": {
+            "team": 0,
+            "score": 385,
+            "bonus": 0,
+            "item": [],
+            "wpc": []
+          },
+          "data": {
+            "score": 10000
+          },
+          "place": 542,
+          "target": null,
+          "equip": {
+            "robot": true
+          },
+          "level": 2,
+          "ready": true
+        }
+      ],
+      "readies": {
+        "guest__pwkBeEhXk2MKaDfTN_h-kldcs5fdsqOT": {}
+      },
+      "gaming": true,
+      "game": {
+        "round": 2,
+        "turn": 1,
+        "seq": [
+          {
+            "id": 999268299,
+            "robot": true,
+            "game": {
+              "team": 0,
+              "score": 329,
+              "bonus": 0,
+              "item": [],
+              "wpc": []
+            },
+            "data": {
+              "score": 10000
+            },
+            "place": 542,
+            "target": null,
+            "equip": {
+              "robot": true
+            },
+            "level": 2,
+            "ready": true
+          },
+          {
+            "id": 825375408,
+            "robot": true,
+            "game": {
+              "team": 0,
+              "score": 385,
+              "bonus": 0,
+              "item": [],
+              "wpc": []
+            },
+            "data": {
+              "score": 10000
+            },
+            "place": 542,
+            "target": null,
+            "equip": {
+              "robot": true
+            },
+            "level": 2,
+            "ready": true
+          },
+          "guest__pwkBeEhXk2MKaDfTN_h-kldcs5fdsqOT",
+          {
+            "id": 973403902,
+            "robot": true,
+            "game": {
+              "team": 0,
+              "score": 419,
+              "bonus": 0,
+              "item": [],
+              "wpc": []
+            },
+            "data": {
+              "score": 10000
+            },
+            "place": 542,
+            "target": null,
+            "equip": {
+              "robot": true
+            },
+            "level": 2,
+            "ready": true
+          },
+          {
+            "id": 822059637,
+            "robot": true,
+            "game": {
+              "team": 0,
+              "score": 418,
+              "bonus": 0,
+              "item": [],
+              "wpc": []
+            },
+            "data": {
+              "score": 10000
+            },
+            "place": 542,
+            "target": null,
+            "equip": {
+              "robot": true
+            },
+            "level": 2,
+            "ready": true
+          }
+        ],
+        "title": "포스파티드",
+        "mission": null
+      },
+      "practice": false,
+      "opts": {
+        "manner": false,
+        "safe": false,
+        "injeong": false,
+        "mission": false,
+        "loanword": false,
+        "proverb": false,
+        "strict": false,
+        "sami": false,
+        "no2": false,
+        "injpick": []
+      }
+    },
+    "544": {
+      "id": 544,
+      "channel": "2",
+      "title": "회원님의 방",
+      "password": false,
+      "limit": 8,
+      "mode": 2,
+      "round": 6,
+      "time": 90,
+      "master": "guest__UarHTlG7z0yubZn9SakXL5LDH48rtiHe",
+      "players": [
+        "guest__UarHTlG7z0yubZn9SakXL5LDH48rtiHe",
+        "guest__77IsZd_uZxTnppKLejOak9_GNO_WT-vE"
+      ],
+      "readies": {
+        "guest__UarHTlG7z0yubZn9SakXL5LDH48rtiHe": {
+          "r": false,
+          "f": "J",
+          "t": 0
+        },
+        "guest__77IsZd_uZxTnppKLejOak9_GNO_WT-vE": {
+          "r": true,
+          "f": "J",
+          "t": 0
+        }
+      },
+      "gaming": true,
+      "game": {
+        "round": 0,
+        "turn": 0,
+        "seq": [
+          "guest__77IsZd_uZxTnppKLejOak9_GNO_WT-vE",
+          "guest__UarHTlG7z0yubZn9SakXL5LDH48rtiHe"
+        ],
+        "title": "스케이트보드",
+        "mission": null
+      },
+      "practice": false,
+      "opts": {
+        "manner": true,
+        "safe": false,
+        "injeong": true,
+        "mission": false,
+        "loanword": false,
+        "proverb": false,
+        "strict": false,
+        "sami": false,
+        "no2": false,
+        "injpick": []
+      }
+    }
+  },
+  "friends": {},
+  "admin": false,
+  "caj": false,
+  "type": "welcome"
+}
