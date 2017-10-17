@@ -6,7 +6,9 @@ import kr.rvs.kkutu.network.packet.impl.in.ChatInPacket;
 import kr.rvs.kkutu.network.packet.impl.in.ConnectPacket;
 import kr.rvs.kkutu.network.packet.impl.in.DisconnectPacket;
 import kr.rvs.kkutu.network.packet.impl.in.PreRoomPacket;
+import kr.rvs.kkutu.network.packet.impl.in.RoomJoinPacket;
 import kr.rvs.kkutu.network.packet.impl.in.RoomPacket;
+import kr.rvs.kkutu.network.packet.impl.in.RoomQuitPacket;
 import kr.rvs.kkutu.network.packet.impl.in.WelcomePacket;
 import kr.rvs.kkutu.network.packet.impl.in.YellPacket;
 import kr.rvs.kkutu.util.Static;
@@ -26,7 +28,7 @@ public class KkutuKoreaPacketFactory implements PacketFactory {
     public KkutuKoreaPacketFactory() {
         register(
                 ChatInPacket.class, ConnectPacket.class, DisconnectPacket.class, PreRoomPacket.class, RoomPacket.class,
-                WelcomePacket.class, YellPacket.class
+                WelcomePacket.class, YellPacket.class, RoomJoinPacket.class, RoomQuitPacket.class
         );
     }
 

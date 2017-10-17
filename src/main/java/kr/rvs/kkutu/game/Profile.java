@@ -3,6 +3,7 @@ package kr.rvs.kkutu.game;
 import com.google.gson.annotations.SerializedName;
 import javafx.scene.image.Image;
 import kr.rvs.kkutu.gson.JsonObjectWrapper;
+import kr.rvs.kkutu.util.Server;
 
 /**
  * Created by Junhyeong Lim on 2017-10-07.
@@ -29,6 +30,10 @@ public class Profile {
 
     public Image getImage(String baseUrl) {
         return new Image(baseUrl + imageUrl);
+    }
+
+    public Image getImage(Server server) {
+        return getImage(server.getServer().getStringURL());
     }
 
     public String getId() {

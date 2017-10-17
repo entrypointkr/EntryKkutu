@@ -21,7 +21,7 @@ import kr.rvs.kkutu.gui.listener.UserSearchListener;
 import kr.rvs.kkutu.holder.RoomHolder;
 import kr.rvs.kkutu.holder.UserHolder;
 import kr.rvs.kkutu.network.handler.lobby.ChatHandler;
-import kr.rvs.kkutu.network.handler.lobby.RoomHandler;
+import kr.rvs.kkutu.network.handler.lobby.LobbyHandler;
 import kr.rvs.kkutu.network.handler.lobby.UpdateHandler;
 import kr.rvs.kkutu.network.packet.PacketManager;
 import kr.rvs.kkutu.util.Server;
@@ -36,7 +36,7 @@ import java.util.Set;
 /**
  * Created by Junhyeong Lim on 2017-10-02.
  */
-public class LobbyController implements Initializable {
+public class LobbyController implements Initializable, Chatable {
     private final Server server;
     private final PacketManager packetManager;
     public TextArea chatArea;
@@ -64,16 +64,19 @@ public class LobbyController implements Initializable {
         // Application
         UserHolder userHolder = new UserHolder(server.getServer(), this);
         RoomHolder roomHolder = new RoomHolder(this);
-        RoomHandler roomHandler = new RoomHandler(server, this, packetManager);
+
+        ChatHandler chatHandler = new ChatHandler(packetManager, this);
+        LobbyHandler lobbyHandler = new LobbyHandler(server, this, packetManager, roomHolder);
 
         packetManager.getHandlers().add(
-                new ChatHandler(packetManager, this),
+                chatHandler,
                 new UpdateHandler(userHolder, roomHolder, this),
-                roomHandler
+                lobbyHandler
         );
 
         // JavaFX
         chatField.focusedProperty().addListener(new InstantTextClear(chatField));
+        chatField.setOnKeyPressed(chatHandler);
         userSearchField.focusedProperty().addListener(new InstantTextClear(userSearchField));
         userSearchField.textProperty().addListener(new UserSearchListener(userView, userHolder));
         roomView.setRowFactory(param -> {
@@ -86,15 +89,18 @@ public class LobbyController implements Initializable {
                     setStyle(ingame ? "-fx-background-color:lightgrey" : null);
                 }
             };
-            row.setOnMouseClicked(roomHandler);
+            row.setOnMouseClicked(lobbyHandler);
             return row;
         });
     }
 
+    @Override
     public void chat(String name, String message) {
-        if (chatArea.getLength() > 0)
-            chatArea.appendText("\n");
-        chatArea.appendText(String.format("%s: %s", name, message));
+        Platform.runLater(() -> {
+            if (chatArea.getLength() > 0)
+                chatArea.appendText("\n");
+            chatArea.appendText(String.format("%s: %s", name, message));
+        });
     }
 
     public void updateUsers(Map<String, User> userMap) {
@@ -133,7 +139,7 @@ public class LobbyController implements Initializable {
 
     public void myProfileInit(User me) {
         Platform.runLater(() -> {
-            profileImage.setImage(me.getProfile().getImage(server.getServer().getStringURL()));
+            profileImage.setImage(me.getProfile().getImage(server));
             userNameLabel.setText(me.getProfile().getName());
             hasMoneyLabel.setText(me.getMoney() + " 핑");
             userLevelLabel.setText("1 레벨");

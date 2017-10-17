@@ -47,10 +47,11 @@ public class PacketManager {
         handlers.notify(packet);
     }
 
-    public void send(WritablePacket packet) {
+    public void send(Packet packet) {
         JsonObject json = GSON.toJsonTree(packet).getAsJsonObject();
         json.addProperty("type", packet.type());
-        packet.write(json);
+        if (packet instanceof Writable)
+            ((Writable) packet).write(json);
         channel.writeAndFlush(new TextWebSocketFrame(json.toString()));
     }
 

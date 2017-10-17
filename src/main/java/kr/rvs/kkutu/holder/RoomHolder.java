@@ -4,6 +4,7 @@ import kr.rvs.kkutu.game.Room;
 import kr.rvs.kkutu.gui.LobbyController;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -35,5 +36,9 @@ public class RoomHolder {
         Room old = roomMap.remove(key);
         refresh();
         return old;
+    }
+
+    public Optional<Room> get(Integer key) {
+        return Optional.ofNullable(roomMap.get(key));
     }
 }
