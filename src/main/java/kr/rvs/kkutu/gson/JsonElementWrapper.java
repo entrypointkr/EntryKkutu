@@ -1,35 +1,49 @@
 package kr.rvs.kkutu.gson;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import kr.rvs.kkutu.factory.game.GameFactory;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
 /**
  * Created by Junhyeong Lim on 2017-10-07.
  */
 public class JsonElementWrapper extends JsonElement {
     private final JsonElement element;
+    private final GameFactory gameFactory;
 
-    public JsonElementWrapper(JsonElement element) {
+    public JsonElementWrapper(JsonElement element, GameFactory gameFactory) {
         this.element = element;
+        this.gameFactory = gameFactory;
     }
 
     public JsonObjectWrapper getAsJsonObjectWrapper() {
-        return new JsonObjectWrapper(getAsJsonObject());
+        return new JsonObjectWrapper(getAsJsonObject(), gameFactory);
     }
 
-    public String[] getAsStringArray() {
+    public <T> List<T> getAsSpecificTypeArray(Function<JsonElementWrapper, T> remapper) {
         JsonArray array = getAsJsonArray();
-        String[] strArr = new String[array.size()];
-        for (int i = 0; i < strArr.length; i++) {
-            JsonElement element = array.get(i);
-            if (!element.isJsonPrimitive())
-                continue;
-
-            strArr[i] = array.get(i).getAsString();
+        List<T> ret = new ArrayList<>(array.size());
+        for (JsonElement element : array) {
+            ret.add(remapper.apply(new JsonElementWrapper(element, gameFactory)));
         }
-        return strArr;
+        return ret;
+    }
+
+    public <T> T getAsSpecificType(Function<JsonElementWrapper, T> mapper) {
+        return mapper.apply(this);
+    }
+
+    public <T> T getAsGameObject(GameObjectMapper<T> mapper) {
+        return mapper.apply(getAsJsonObjectWrapper(), gameFactory);
     }
 
     @Override
@@ -140,5 +154,13 @@ public class JsonElementWrapper extends JsonElement {
     @Override
     public String toString() {
         return element.toString();
+    }
+
+    public JsonElement getElement() {
+        return element;
+    }
+
+    public interface GameObjectMapper<T> {
+        T apply(JsonObjectWrapper wrapper, GameFactory factory);
     }
 }

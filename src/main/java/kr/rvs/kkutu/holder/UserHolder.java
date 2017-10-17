@@ -1,15 +1,12 @@
 package kr.rvs.kkutu.holder;
 
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TitledPane;
 import kr.rvs.kkutu.game.User;
+import kr.rvs.kkutu.gui.LobbyController;
 import kr.rvs.kkutu.util.Servers;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -17,27 +14,16 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class UserHolder {
     private final Servers server;
-    private final TitledPane titledPane;
-    private final ListView<String> userView;
+    private final LobbyController controller;
     private final Map<String, User> userMap = new ConcurrentHashMap<>();
 
-    public UserHolder(Servers server, TitledPane titledPane, ListView<String> userView) {
+    public UserHolder(Servers server, LobbyController controller) {
         this.server = server;
-        this.titledPane = titledPane;
-        this.userView = userView;
+        this.controller = controller;
     }
 
     private void refresh() {
-        ObservableList<String> items = userView.getItems();
-
-        Platform.runLater(() -> {
-            items.clear();
-            for (User user : userMap.values()) {
-                items.add(user.getProfile().getName());
-            }
-            userView.refresh();
-            titledPane.setText(String.format("%s (%d명)", server.getName(), items.size()));
-        });
+        controller.updateUsers(userMap);
     }
 
     public void add(User user) {
@@ -54,6 +40,10 @@ public class UserHolder {
         User old = userMap.remove(key);
         refresh();
         return old;
+    }
+
+    public Optional<User> get(String key) {
+        return Optional.ofNullable(userMap.get(key));
     }
 
     public Collection<User> getUsers() {

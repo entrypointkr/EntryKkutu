@@ -1,6 +1,7 @@
 package kr.rvs.kkutu.game;
 
 import com.google.gson.annotations.SerializedName;
+import javafx.scene.image.Image;
 import kr.rvs.kkutu.gson.JsonObjectWrapper;
 
 /**
@@ -8,10 +9,16 @@ import kr.rvs.kkutu.gson.JsonObjectWrapper;
  */
 public class Profile {
     private final String id;
-    @SerializedName("title")
-    private final String name;
     @SerializedName("image")
     private final String imageUrl;
+    @SerializedName("title")
+    private String name;
+
+    public Profile(String id, String name, String imageUrl) {
+        this.id = id;
+        this.name = name;
+        this.imageUrl = imageUrl;
+    }
 
     public static Profile of(JsonObjectWrapper json) {
         String id = json.get("id").getAsString();
@@ -20,10 +27,8 @@ public class Profile {
         return new Profile(id, title, image);
     }
 
-    public Profile(String id, String name, String imageUrl) {
-        this.id = id;
-        this.name = name;
-        this.imageUrl = imageUrl;
+    public Image getImage(String baseUrl) {
+        return new Image(baseUrl + imageUrl);
     }
 
     public String getId() {
@@ -32,6 +37,10 @@ public class Profile {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getImageUrl() {

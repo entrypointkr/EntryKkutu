@@ -8,24 +8,6 @@ import java.util.List;
  * Created by Junhyeong Lim on 2017-10-07.
  */
 public class Room {
-//    public static Room of(JsonObjectWrapper json) {
-//        int id = json.get("id").getAsInt();
-//        String channel = json.get("channel").getAsString();
-//        String title = json.get("title").getAsString();
-//        boolean password = json.get("password").getAsBoolean();
-//        int limit = json.get("limit").getAsInt();
-//        int mode = json.get("mode").getAsInt();
-//        int round = json.get("round").getAsInt();
-//        int time = json.get("time").getAsInt();
-//        String master = json.get("master").getAsString();
-//        List<String> players = Arrays.asList(json.get("players").getAsStringArray());
-//        boolean ingame = json.get("gaming").getAsBoolean();
-//        Game game = Game.of(json.get("game").getAsJsonObjectWrapper());
-//        GameOption option = GameOption.of(json.get("opts").getAsJsonObjectWrapper());
-//
-//        return new Room(id, channel, title, password, limit, mode, round, time, master, players, ingame, game, option);
-//    }
-
     private final int id;
     private final String channel;
     private final String title;
@@ -58,6 +40,14 @@ public class Room {
         this.option = option;
     }
 
+    public String getTotalPlayersStr() {
+        return getPlayers().size() + "/" + getLimit();
+    }
+
+    public boolean isJoinable() {
+        return !isIngame() && players.size() < limit;
+    }
+
     public int getId() {
         return id;
     }
@@ -78,8 +68,8 @@ public class Room {
         return limit;
     }
 
-    public RoomType getMode() {
-        return RoomType.getById(mode);
+    public GameType getMode() {
+        return GameType.getById(mode);
     }
 
     public int getRound() {
@@ -108,5 +98,20 @@ public class Room {
 
     public GameOption getOption() {
         return option;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Room room = (Room) o;
+
+        return id == room.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 }

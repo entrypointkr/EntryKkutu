@@ -3,7 +3,7 @@ package kr.rvs.kkutu.game;
 /**
  * Created by Junhyeong Lim on 2017-10-12.
  */
-public enum RoomType {
+public enum GameType {
     영어끄투("영어 끄투"),
     영어끝말("영어 끝말잇기"),
     한글쿵쿵따("한국어 쿵쿵따"),
@@ -17,21 +17,22 @@ public enum RoomType {
     한글단어("한국어 단어대결"),
     한글솎솎("한국어 솎솎"),
     영어솎솎("영어 솎솎"),
-    ;
+    UNKNOWN("UNKNOWN"),
+    그림퀴즈("그림퀴즈");
 
     private final String name;
 
-    RoomType(String name) {
+    GameType(String name) {
         this.name = name;
+    }
+
+    public static GameType getById(int mode) {
+        GameType[] types = values();
+        return types.length > mode ?
+                types[mode] : null;
     }
 
     public String getName() {
         return name;
-    }
-
-    public static RoomType getById(int mode) {
-        RoomType[] types = values();
-        return types.length > mode ?
-                types[mode] : null;
     }
 }

@@ -1,4 +1,4 @@
-package kr.rvs.kkutu.network;
+package kr.rvs.kkutu.network.netty;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -13,32 +13,28 @@ import io.netty.handler.codec.http.HttpClientCodec;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.websocketx.WebSocketClientHandshakerFactory;
 import io.netty.handler.codec.http.websocketx.WebSocketVersion;
-import kr.rvs.kkutu.util.Servers;
+import kr.rvs.kkutu.network.packet.PacketManager;
+import kr.rvs.kkutu.util.Static;
 
 import java.net.URI;
 
 /**
  * Created by Junhyeong Lim on 2017-10-02.
  */
-public class WebSocketClient extends Connection {
+public class WebSocketClient extends Thread {
+    private final String name;
     private final URI uri;
-    private final Servers server;
     private final PacketManager manager;
+    private final EventLoopGroup group = new NioEventLoopGroup();
 
-    public WebSocketClient(Servers server, URI uri, PacketManager manager) {
-        super(uri.getPort());
+    public WebSocketClient(String name, URI uri, PacketManager manager) {
+        this.name = name;
         this.uri = uri;
-        this.server = server;
         this.manager = manager;
     }
 
-    public WebSocketClient(Servers server, PacketManager manager) {
-        this(server, server.toURI(0), manager);
-    }
-
     @Override
-    public void run0() throws Exception {
-        EventLoopGroup group = new NioEventLoopGroup();
+    public void run() {
         try {
             final WebSocketClientHandler handler = new WebSocketClientHandler(
                     WebSocketClientHandshakerFactory.newHandshaker(
@@ -61,7 +57,7 @@ public class WebSocketClient extends Connection {
                             pipe.addLast(
                                     new HttpClientCodec(),
                                     new HttpObjectAggregator(Integer.MAX_VALUE),
-                                    new WebSocketMonitor(),
+                                    new WebSocketMonitor(name),
                                     handler
                             );
                         }
@@ -72,6 +68,8 @@ public class WebSocketClient extends Connection {
             handler.handshakeFuture().sync();
 
             ch.closeFuture().sync();
+        } catch (Exception ex) {
+            Static.log(ex);
         } finally {
             group.shutdownGracefully();
         }

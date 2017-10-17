@@ -1,25 +1,9 @@
 package kr.rvs.kkutu.game;
 
-import kr.rvs.kkutu.gson.JsonObjectWrapper;
-
 /**
  * Created by Junhyeong Lim on 2017-10-07.
  */
 public class GameOption {
-    public static GameOption of(JsonObjectWrapper json) {
-        boolean manner = json.get("manner").getAsBoolean();
-        boolean safe = json.get("safe").getAsBoolean();
-        boolean injeong = json.get("injeong").getAsBoolean();
-        boolean mission = json.get("mission").getAsBoolean();
-        boolean loanword = json.get("loanword").getAsBoolean();
-        boolean proverb = json.get("proverb").getAsBoolean();
-        boolean strict = json.get("strict").getAsBoolean();
-        boolean sami = json.get("sami").getAsBoolean();
-        boolean no2 = json.get("no2").getAsBoolean();
-
-        return new GameOption(manner, safe, injeong, mission, loanword, proverb, strict, sami, no2);
-    }
-
     private final boolean manner;
     private final boolean safe;
     private final boolean injeong;
@@ -40,5 +24,37 @@ public class GameOption {
         this.strict = strict;
         this.sami = sami;
         this.no2 = no2;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GameOption option = (GameOption) o;
+
+        if (manner != option.manner) return false;
+        if (safe != option.safe) return false;
+        if (injeong != option.injeong) return false;
+        if (mission != option.mission) return false;
+        if (loanword != option.loanword) return false;
+        if (proverb != option.proverb) return false;
+        if (strict != option.strict) return false;
+        if (sami != option.sami) return false;
+        return no2 == option.no2;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (manner ? 1 : 0);
+        result = 31 * result + (safe ? 1 : 0);
+        result = 31 * result + (injeong ? 1 : 0);
+        result = 31 * result + (mission ? 1 : 0);
+        result = 31 * result + (loanword ? 1 : 0);
+        result = 31 * result + (proverb ? 1 : 0);
+        result = 31 * result + (strict ? 1 : 0);
+        result = 31 * result + (sami ? 1 : 0);
+        result = 31 * result + (no2 ? 1 : 0);
+        return result;
     }
 }

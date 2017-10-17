@@ -1,28 +1,19 @@
 package kr.rvs.kkutu.game;
 
-import kr.rvs.kkutu.gson.JsonObjectWrapper;
-
 /**
  * Created by Junhyeong Lim on 2017-10-12.
  */
 public class User {
     private final String id;
+    private final Data data;
     private final boolean guest;
     private final Game game;
     private final Profile profile;
     private final int money;
 
-    public static User of(JsonObjectWrapper json) {
-        String id = json.get("id").getAsString();
-        boolean guest = json.get("guest").getAsBoolean();
-        Game game = Game.of(json.get("game").getAsJsonObjectWrapper());
-        Profile profile = Profile.of(json.get("profile").getAsJsonObjectWrapper());
-        int money = json.get("money").getAsInt();
-        return new User(id, guest, game, profile, money);
-    }
-
-    public User(String id, boolean guest, Game game, Profile profile, int money) {
+    public User(String id, Data data, boolean guest, Game game, Profile profile, int money) {
         this.id = id;
+        this.data = data;
         this.guest = guest;
         this.game = game;
         this.profile = profile;
@@ -31,6 +22,10 @@ public class User {
 
     public String getId() {
         return id;
+    }
+
+    public Data getData() {
+        return data;
     }
 
     public boolean isGuest() {
@@ -47,5 +42,41 @@ public class User {
 
     public int getMoney() {
         return money;
+    }
+
+    public static class Data {
+        private int connectData;
+        private int playTime;
+        private int score;
+
+        public Data(int connectData, int playTime, int score) {
+            this.connectData = connectData;
+            this.playTime = playTime;
+            this.score = score;
+        }
+
+        public int getConnectData() {
+            return connectData;
+        }
+
+        public void setConnectData(int connectData) {
+            this.connectData = connectData;
+        }
+
+        public int getPlayTime() {
+            return playTime;
+        }
+
+        public void setPlayTime(int playTime) {
+            this.playTime = playTime;
+        }
+
+        public int getScore() {
+            return score;
+        }
+
+        public void setScore(int score) {
+            this.score = score;
+        }
     }
 }

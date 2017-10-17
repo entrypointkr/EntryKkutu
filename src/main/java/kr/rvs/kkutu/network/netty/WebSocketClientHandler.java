@@ -1,4 +1,4 @@
-package kr.rvs.kkutu.network;
+package kr.rvs.kkutu.network.netty;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -13,6 +13,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketClientHandshaker;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketHandshakeException;
 import io.netty.util.CharsetUtil;
+import kr.rvs.kkutu.network.packet.PacketManager;
 
 /**
  * Created by Junhyeong Lim on 2017-10-02.
@@ -20,8 +21,8 @@ import io.netty.util.CharsetUtil;
 public class WebSocketClientHandler extends SimpleChannelInboundHandler<Object> {
     private static final JsonParser PARSER = new JsonParser();
     private final WebSocketClientHandshaker handshaker;
-    private ChannelPromise handshakeFuture;
     private final PacketManager packetManager;
+    private ChannelPromise handshakeFuture;
 
     public WebSocketClientHandler(WebSocketClientHandshaker handshaker, PacketManager packetManager) {
         this.handshaker = handshaker;

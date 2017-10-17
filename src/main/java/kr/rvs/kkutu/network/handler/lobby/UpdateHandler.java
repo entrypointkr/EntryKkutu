@@ -1,15 +1,16 @@
-package kr.rvs.kkutu.network.handler;
+package kr.rvs.kkutu.network.handler.lobby;
 
-import com.google.inject.Inject;
 import kr.rvs.kkutu.game.Room;
+import kr.rvs.kkutu.gui.LobbyController;
 import kr.rvs.kkutu.holder.RoomHolder;
 import kr.rvs.kkutu.holder.UserHolder;
 import kr.rvs.kkutu.network.packet.Packet;
 import kr.rvs.kkutu.network.packet.PacketHandler;
-import kr.rvs.kkutu.network.packet.in.ConnectPacket;
-import kr.rvs.kkutu.network.packet.in.DisconnectPacket;
-import kr.rvs.kkutu.network.packet.in.RoomPacket;
-import kr.rvs.kkutu.network.packet.in.WelcomePacket;
+import kr.rvs.kkutu.network.packet.PacketHandlers;
+import kr.rvs.kkutu.network.packet.impl.in.ConnectPacket;
+import kr.rvs.kkutu.network.packet.impl.in.DisconnectPacket;
+import kr.rvs.kkutu.network.packet.impl.in.RoomPacket;
+import kr.rvs.kkutu.network.packet.impl.in.WelcomePacket;
 
 /**
  * Created by Junhyeong Lim on 2017-10-12.
@@ -17,19 +18,21 @@ import kr.rvs.kkutu.network.packet.in.WelcomePacket;
 public class UpdateHandler implements PacketHandler {
     private final UserHolder userHolder;
     private final RoomHolder roomHolder;
+    private final LobbyController controller;
 
-    @Inject
-    public UpdateHandler(UserHolder userHolder, RoomHolder roomHolder) {
+    public UpdateHandler(UserHolder userHolder, RoomHolder roomHolder, LobbyController controller) {
         this.userHolder = userHolder;
         this.roomHolder = roomHolder;
+        this.controller = controller;
     }
 
     @Override
-    public void handle(Packet packet) {
+    public void handle(PacketHandlers handlers, Packet packet) {
         if (packet instanceof WelcomePacket) {
             WelcomePacket welcomePacket = ((WelcomePacket) packet);
-            userHolder.add(welcomePacket.users);
-            roomHolder.add(welcomePacket.rooms);
+            userHolder.add(welcomePacket.userMap);
+            roomHolder.add(welcomePacket.roomMap);
+            userHolder.get(welcomePacket.id).ifPresent(controller::myProfileInit);
         } else if (packet instanceof ConnectPacket) {
             ConnectPacket connectPacket = ((ConnectPacket) packet);
             userHolder.add(connectPacket.user);

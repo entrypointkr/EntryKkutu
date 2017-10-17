@@ -1,4 +1,4 @@
-package kr.rvs.kkutu.network;
+package kr.rvs.kkutu.network.netty;
 
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,15 +12,21 @@ import java.util.logging.Level;
  * Created by Junhyeong Lim on 2017-10-12.
  */
 public class WebSocketMonitor extends ChannelDuplexHandler {
+    private final String name;
+
+    public WebSocketMonitor(String name) {
+        this.name = name;
+    }
+
     @Override
     public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
-        process("send: ", msg);
+        process(name + " send: ", msg);
         super.write(ctx, msg, promise);
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        process("receive: ", msg);
+        process(name + " receive: ", msg);
         super.channelRead(ctx, msg);
     }
 

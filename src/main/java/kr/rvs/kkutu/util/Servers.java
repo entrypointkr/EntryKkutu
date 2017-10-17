@@ -1,78 +1,44 @@
 package kr.rvs.kkutu.util;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
+import kr.rvs.kkutu.factory.game.GameFactory;
+import kr.rvs.kkutu.factory.game.KkutuIoGameFactory;
+import kr.rvs.kkutu.factory.game.KkutuKoreaGameFactory;
+import kr.rvs.kkutu.factory.packet.KkutuIoPacketFactory;
+import kr.rvs.kkutu.factory.packet.KkutuKoreaPacketFactory;
+import kr.rvs.kkutu.factory.packet.PacketFactory;
 
 /**
  * Created by Junhyeong Lim on 2017-10-02.
  */
 public enum Servers {
-    KKUTU_IO("http://kkutu.io/", "끄투리오"),
-    KKUTU_COKR("http://kkutu.co.kr/", "끄투코리아");
+    KKUTU_IO("http://kkutu.io", "끄투리오", new KkutuIoPacketFactory(), new KkutuIoGameFactory()),
+    KKUTU_COKR("http://kkutu.co.kr", "끄투코리아", new KkutuKoreaPacketFactory(), new KkutuKoreaGameFactory());
+
     private final String url;
     private final String name;
+    private final PacketFactory packetFactory;
+    private final GameFactory gameFactory;
 
-    private static String getToken(String name) {
-        String token = null;
-        File file = new File(name.replace(' ', '_').trim() + ".token");
-        try (BufferedReader reader = file.isFile() ? new BufferedReader(new FileReader(file)) : new BufferedReader(new InputStreamReader(System.in))) {
-            token = reader.readLine();
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-                writer.write(token);
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return token;
-    }
-
-
-    Servers(String url, String name) {
+    Servers(String url, String name, PacketFactory packetFactory, GameFactory gameFactory) {
         this.url = url;
         this.name = name;
-    }
-
-    public URI toURI(int server) {
-        try {
-            URL url = getURL(server);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-
-            try (BufferedReader in = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream()))) {
-                String inputLine;
-                StringBuilder response = new StringBuilder();
-
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                String tag = "<span id=\"URL\">";
-                String parse = response.substring(response.indexOf(tag));
-                return new URI(parse.substring(tag.length(), parse.indexOf("</span>")));
-            }
-        } catch (Exception ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
-
-    public URL getURL(int server) {
-        try {
-            return new URL(url + "?server=" + server);
-        } catch (MalformedURLException e) {
-            throw new IllegalStateException(e);
-        }
+        this.packetFactory = packetFactory;
+        this.gameFactory = gameFactory;
     }
 
     public String getName() {
         return name;
+    }
+
+    public PacketFactory getPacketFactory() {
+        return packetFactory;
+    }
+
+    public GameFactory getGameFactory() {
+        return gameFactory;
+    }
+
+    public String getStringURL() {
+        return url;
     }
 }
