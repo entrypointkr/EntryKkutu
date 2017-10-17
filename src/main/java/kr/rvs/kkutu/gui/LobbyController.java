@@ -133,6 +133,8 @@ public class LobbyController implements Initializable, Chatable {
                 remain.remove(item);
             }
             items.addAll(remain);
+            items.sort((o1, o2) ->
+                    Boolean.compare(o2.getRoom().isJoinable(), o1.getRoom().isJoinable()));
             roomView.refresh();
         });
     }
