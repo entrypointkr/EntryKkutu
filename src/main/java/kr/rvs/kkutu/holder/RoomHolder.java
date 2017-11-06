@@ -6,16 +6,18 @@ import kr.rvs.kkutu.gui.LobbyController;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
 /**
  * Created by Junhyeong Lim on 2017-10-12.
  */
 public class RoomHolder {
-    private final LobbyController controller;
+    private static final RoomHolder inst = new RoomHolder();
+    private LobbyController controller;
     private final Map<Integer, Room> roomMap = new ConcurrentHashMap<>();
 
-    public RoomHolder(LobbyController controller) {
-        this.controller = controller;
+    public static RoomHolder getInst() {
+        return inst;
     }
 
     private void refresh() {
@@ -33,6 +35,7 @@ public class RoomHolder {
     }
 
     public Room remove(Integer key) {
+        Logger.getLogger()
         Room old = roomMap.remove(key);
         refresh();
         return old;
@@ -40,5 +43,9 @@ public class RoomHolder {
 
     public Optional<Room> get(Integer key) {
         return Optional.ofNullable(roomMap.get(key));
+    }
+
+    public void setController(LobbyController controller) {
+        this.controller = controller;
     }
 }

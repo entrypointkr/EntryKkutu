@@ -2,7 +2,8 @@ package kr.rvs.kkutu.game;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Junhyeong Lim on 2017-10-07.
@@ -17,14 +18,14 @@ public class Room {
     private final int round;
     private final int time;
     private final String master;
-    private final List<Object> players;
+    private final Map<String, User> playerMap = new HashMap<>();
     @SerializedName("gaming")
     private final boolean ingame;
-    private final Game game;
+    private final RoomInfo game;
     @SerializedName("opts")
     private final GameOption option;
 
-    public Room(int id, String channel, String title, boolean password, int limit, int mode, int round, int time, String master, List<Object> players, boolean ingame, Game game, GameOption option) {
+    public Room(int id, String channel, String title, boolean password, int limit, int mode, int round, int time, String master, boolean ingame, RoomInfo game, GameOption option) {
         this.id = id;
         this.channel = channel;
         this.title = title;
@@ -34,18 +35,22 @@ public class Room {
         this.round = round;
         this.time = time;
         this.master = master;
-        this.players = players;
         this.ingame = ingame;
         this.game = game;
         this.option = option;
     }
 
+    public void addUser(User user) {
+        if (user != null)
+            this.playerMap.put(user.getId(), user);
+    }
+
     public String getTotalPlayersStr() {
-        return getPlayers().size() + "/" + getLimit();
+        return getPlayerMap().size() + "/" + getLimit();
     }
 
     public boolean isJoinable() {
-        return !isIngame() && players.size() < limit;
+        return !isIngame() && playerMap.size() < limit;
     }
 
     public int getId() {
@@ -84,15 +89,15 @@ public class Room {
         return master;
     }
 
-    public List<Object> getPlayers() {
-        return players;
+    public Map<String, User> getPlayerMap() {
+        return playerMap;
     }
 
     public boolean isIngame() {
         return ingame;
     }
 
-    public Game getGame() {
+    public RoomInfo getGame() {
         return game;
     }
 

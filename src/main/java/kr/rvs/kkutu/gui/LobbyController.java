@@ -1,6 +1,5 @@
 package kr.rvs.kkutu.gui;
 
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -21,9 +20,10 @@ import kr.rvs.kkutu.gui.listener.UserSearchListener;
 import kr.rvs.kkutu.holder.RoomHolder;
 import kr.rvs.kkutu.holder.UserHolder;
 import kr.rvs.kkutu.network.handler.lobby.ChatHandler;
-import kr.rvs.kkutu.network.handler.lobby.LobbyHandler;
+import kr.rvs.kkutu.network.handler.lobby.JoinHandler;
 import kr.rvs.kkutu.network.handler.lobby.UpdateHandler;
 import kr.rvs.kkutu.network.packet.PacketManager;
+import kr.rvs.kkutu.util.Environment;
 import kr.rvs.kkutu.util.Server;
 
 import java.net.URL;
@@ -62,23 +62,24 @@ public class LobbyController implements Initializable, Chatable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Application
-        UserHolder userHolder = new UserHolder(server.getServer(), this);
-        RoomHolder roomHolder = new RoomHolder(this);
+        Environment.setServer(server);
+        UserHolder.getInst().setController(this);
+        RoomHolder.getInst().setController(this);
 
         ChatHandler chatHandler = new ChatHandler(packetManager, this);
-        LobbyHandler lobbyHandler = new LobbyHandler(server, this, packetManager, roomHolder);
+        JoinHandler joinHandler = new JoinHandler(server, this, packetManager);
 
         packetManager.getHandlers().add(
                 chatHandler,
-                new UpdateHandler(userHolder, roomHolder, this),
-                lobbyHandler
+                new UpdateHandler(this),
+                joinHandler
         );
 
         // JavaFX
         chatField.focusedProperty().addListener(new InstantTextClear(chatField));
         chatField.setOnKeyPressed(chatHandler);
         userSearchField.focusedProperty().addListener(new InstantTextClear(userSearchField));
-        userSearchField.textProperty().addListener(new UserSearchListener(userView, userHolder));
+        userSearchField.textProperty().addListener(new UserSearchListener(userView));
         roomView.setRowFactory(param -> {
             TableRow<RoomItem> row = new TableRow<RoomItem>() {
                 @Override
@@ -89,14 +90,14 @@ public class LobbyController implements Initializable, Chatable {
                     setStyle(ingame ? "-fx-background-color:lightgrey" : null);
                 }
             };
-            row.setOnMouseClicked(lobbyHandler);
+            row.setOnMouseClicked(joinHandler);
             return row;
         });
     }
 
     @Override
     public void chat(String name, String message) {
-        Platform.runLater(() -> {
+        javafx.application.Platform.runLater(() -> {
             if (chatArea.getLength() > 0)
                 chatArea.appendText("\n");
             chatArea.appendText(String.format("%s: %s", name, message));
@@ -104,7 +105,7 @@ public class LobbyController implements Initializable, Chatable {
     }
 
     public void updateUsers(Map<String, User> userMap) {
-        Platform.runLater(() -> {
+        javafx.application.Platform.runLater(() -> {
             ObservableList<String> items = userView.getItems();
             Set<String> set = new HashSet<>(userMap.size());
             for (User user : userMap.values())
@@ -117,7 +118,7 @@ public class LobbyController implements Initializable, Chatable {
     }
 
     public void updateRooms(Map<Integer, Room> roomMap) {
-        Platform.runLater(() -> {
+        javafx.application.Platform.runLater(() -> {
             ObservableList<RoomItem> items = roomView.getItems();
             Set<RoomItem> remain = new HashSet<>(roomMap.size());
             roomMap.values().forEach(room -> remain.add(new RoomItem(room)));
@@ -140,8 +141,8 @@ public class LobbyController implements Initializable, Chatable {
     }
 
     public void myProfileInit(User me) {
-        Platform.runLater(() -> {
-            profileImage.setImage(me.getProfile().getImage(server));
+        javafx.application.Platform.runLater(() -> {
+            profileImage.setImage(me.getProfile().getImage());
             userNameLabel.setText(me.getProfile().getName());
             hasMoneyLabel.setText(me.getMoney() + " 핑");
             userLevelLabel.setText("1 레벨");

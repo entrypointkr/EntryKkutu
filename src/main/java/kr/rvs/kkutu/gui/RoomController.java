@@ -9,7 +9,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import kr.rvs.kkutu.game.User;
 import kr.rvs.kkutu.network.handler.lobby.ChatHandler;
-import kr.rvs.kkutu.network.handler.lobby.RoomHandler;
+import kr.rvs.kkutu.network.handler.room.RoomHandler;
 import kr.rvs.kkutu.network.packet.PacketManager;
 import kr.rvs.kkutu.util.Server;
 

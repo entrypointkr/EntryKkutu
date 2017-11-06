@@ -24,44 +24,15 @@ import kr.rvs.kkutu.util.Server;
 /**
  * Created by Junhyeong Lim on 2017-10-12.
  */
-public class LobbyHandler implements PacketHandler, EventHandler<MouseEvent> {
+public class JoinHandler implements PacketHandler, EventHandler<MouseEvent> {
     private final Server server;
     private final LobbyController controller;
     private final PacketManager manager;
-    private final RoomHolder roomHolder;
 
-    public LobbyHandler(Server server, LobbyController controller, PacketManager manager, RoomHolder roomHolder) {
+    public JoinHandler(Server server, LobbyController controller, PacketManager manager) {
         this.server = server;
         this.controller = controller;
         this.manager = manager;
-        this.roomHolder = roomHolder;
-    }
-
-    @Override
-    public void handle(PacketHandlers handlers, Packet packet) {
-        packet.cast(PreRoomPacket.class).ifPresent(preRoom -> {
-            roomHolder.get(preRoom.id).ifPresent(room -> {
-                if (room.isJoinable() && !room.isPrivate()) {
-                    PacketManager manager = new PacketManager(server.getServer());
-                    showRoomWindow(manager, preRoom);
-                    WebSocketClient client = new WebSocketClient(
-                            "room",
-                            server.getUri(preRoom.channel, preRoom.id),
-                            manager
-                    );
-                    client.start();
-                }
-            });
-        });
-    }
-
-    @Override
-    public void handle(MouseEvent event) {
-        if (event.getButton() == MouseButton.PRIMARY
-                && event.getClickCount() % 2 == 0) {
-            Room room = controller.getSelectedRoom();
-            manager.send(new RoomEnterPacket(room.getId()));
-        }
     }
 
     private void showRoomWindow(PacketManager manager, PreRoomPacket packet) {
@@ -81,5 +52,32 @@ public class LobbyHandler implements PacketHandler, EventHandler<MouseEvent> {
                 throw new IllegalStateException(ex);
             }
         });
+    }
+
+    @Override
+    public void handle(PacketHandlers handlers, Packet packet) {
+        packet.cast(PreRoomPacket.class).ifPresent(preRoom -> {
+            RoomHolder.getInst().get(preRoom.id).ifPresent(room -> {
+                if (room.isJoinable() && !room.isPrivate()) {
+                    PacketManager manager = new PacketManager(server);
+                    showRoomWindow(manager, preRoom);
+                    WebSocketClient client = new WebSocketClient(
+                            "room",
+                            server.getUri(preRoom.channel, preRoom.id),
+                            manager
+                    );
+                    client.start();
+                }
+            });
+        });
+    }
+
+    @Override
+    public void handle(MouseEvent event) {
+        if (event.getButton() == MouseButton.PRIMARY
+                && event.getClickCount() % 2 == 0) {
+            Room room = controller.getSelectedRoom();
+            manager.send(new RoomEnterPacket(room.getId()));
+        }
     }
 }

@@ -13,11 +13,9 @@ import kr.rvs.kkutu.holder.UserHolder;
  */
 public class UserSearchListener implements ChangeListener<String> {
     private final ListView<String> userView;
-    private final UserHolder userHolder;
 
-    public UserSearchListener(ListView<String> userView, UserHolder userHolder) {
+    public UserSearchListener(ListView<String> userView) {
         this.userView = userView;
-        this.userHolder = userHolder;
     }
 
     @Override
@@ -25,7 +23,7 @@ public class UserSearchListener implements ChangeListener<String> {
         Platform.runLater(() -> {
             ObservableList<String> items = userView.getItems();
             items.clear();
-            for (User user : userHolder.getUsers()) {
+            for (User user : UserHolder.getInst().getUsers()) {
                 String name = user.getProfile().getName();
                 if (name.toLowerCase().startsWith(newValue.toLowerCase()))
                     items.add(name);

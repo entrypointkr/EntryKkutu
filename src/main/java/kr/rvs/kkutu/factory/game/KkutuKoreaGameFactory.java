@@ -1,12 +1,14 @@
 package kr.rvs.kkutu.factory.game;
 
-import kr.rvs.kkutu.game.Game;
+import com.google.gson.JsonObject;
 import kr.rvs.kkutu.game.GameOption;
 import kr.rvs.kkutu.game.Profile;
 import kr.rvs.kkutu.game.Room;
-import kr.rvs.kkutu.game.RoomPlayer;
+import kr.rvs.kkutu.game.RoomInfo;
+import kr.rvs.kkutu.game.Bot;
 import kr.rvs.kkutu.game.User;
 import kr.rvs.kkutu.gson.JsonObjectWrapper;
+import kr.rvs.kkutu.holder.UserHolder;
 
 import java.util.List;
 
@@ -14,6 +16,7 @@ import java.util.List;
  * Created by Junhyeong Lim on 2017-10-13.
  */
 public class KkutuKoreaGameFactory implements GameFactory {
+
     @Override
     public Profile createProfile(JsonObjectWrapper json) {
         String id = json.get("id").getAsString();
@@ -24,10 +27,14 @@ public class KkutuKoreaGameFactory implements GameFactory {
 
     @Override
     public User createUser(JsonObjectWrapper json) {
+        JsonObject handle = json.getHandle();
+        if (handle.isJsonPrimitive()) {
+            return UserHolder.getInst().get(handle.getAsString()).orElse(null);
+        }
         String id = json.get("id").getAsString();
         User.Data data = createUserData(json.get("data").getAsJsonObjectWrapper());
         boolean guest = json.get("guest").getAsBoolean();
-        Game game = createGame(json.get("game").getAsJsonObjectWrapper());
+        User.Status game = createStatus(json.get("game").getAsJsonObjectWrapper());
         Profile profile = Profile.of(json.get("profile").getAsJsonObjectWrapper());
         profile.setName(json.get("nick").getAsString());
         int money = json.get("money").getAsInt();
@@ -43,6 +50,14 @@ public class KkutuKoreaGameFactory implements GameFactory {
     }
 
     @Override
+    public User.Status createStatus(JsonObjectWrapper json) {
+        boolean ready = json.get("ready").getAsBoolean();
+        int team = json.get("team").getAsInt();
+        int practice = json.get("practice").getAsInt();
+        return new User.Status(ready, team, practice);
+    }
+
+    @Override
     public Room createRoom(JsonObjectWrapper json) {
         int id = json.get("id").getAsInt();
         String channel = json.get("channel").getAsString();
@@ -53,27 +68,42 @@ public class KkutuKoreaGameFactory implements GameFactory {
         int round = json.get("round").getAsInt();
         int time = json.get("time").getAsInt();
         String master = json.get("master").getAsString();
-        List<Object> players = json.get("players").getAsSpecificTypeArray(element ->
-                element.isJsonPrimitive() ? element.getAsString() : element.getAsGameObject((wrapper, factory) -> factory.createRoomPlayer(wrapper)));
         boolean ingame = json.get("gaming").getAsBoolean();
-        Game game = json.get("game").getAsGameObject((wrapper, factory) -> factory.createGame(wrapper));
+        RoomInfo game = json.get("game").getAsGameObject((wrapper, factory) -> factory.createRoomInfo(wrapper));
         GameOption option = json.get("opts").getAsGameObject((wrapper, factory) -> factory.createGameOption(wrapper));
 
-        return new Room(id, channel, title, password, limit, mode, round, time, master, players, ingame, game, option);
+        Room ret = new Room(id, channel, title, password, limit, mode, round, time, master, ingame, game, option);
+        json.get("players").getAsSpecificTypeArray(element -> {
+            if (element.isJsonPrimitive()) {
+                return UserHolder.getInst().get(element.getAsString()).orElse(null);
+            } else {
+                JsonObjectWrapper bot = element.getAsJsonObjectWrapper();
+                String botId = bot.get("id").getAsString();
+                return new User(
+                        botId,
+                        createUserData(bot),
+                        false,
+                        new User.Status(true, 0, 0),
+                        new Profile(botId, "봇", UserHolder.getInst().getUsers().get(0).getProfile().getImageUrl()),
+                        0
+                );
+            }
+        }).forEach(ret::addUser);
+        return new Room(id, channel, title, password, limit, mode, round, time, master, ingame, game, option);
     }
 
     @Override
-    public RoomPlayer createRoomPlayer(JsonObjectWrapper json) {
+    public Bot createRoomPlayer(JsonObjectWrapper json) {
         String id = json.get("id").getAsString();
         boolean robot = json.get("robot").getAsBoolean();
-        Game game = json.get("game").getAsGameObject((wrapper, factory) -> factory.createGame(wrapper));
+        RoomInfo game = json.get("game").getAsGameObject((wrapper, factory) -> factory.createRoomInfo(wrapper));
         int level = json.get("level").getAsInt();
         boolean ready = json.get("ready").getAsBoolean();
-        return new RoomPlayer(id, robot, game, level, ready);
+        return new Bot(id, robot, game, level, ready);
     }
 
     @Override
-    public Game createGame(JsonObjectWrapper json) {
+    public RoomInfo createRoomInfo(JsonObjectWrapper json) {
         int round = json.get("round").getAsInt();
         int turn = json.get("turn").getAsInt();
         List<Object> seq = json.get("seq").getAsSpecificTypeArray(element ->
@@ -81,7 +111,7 @@ public class KkutuKoreaGameFactory implements GameFactory {
         String title = json.get("title").getAsString();
         String mission = json.get("mission").getAsString();
 
-        return new Game(round, turn, seq, title, mission);
+        return new RoomInfo(round, turn, seq, title, mission);
     }
 
     @Override

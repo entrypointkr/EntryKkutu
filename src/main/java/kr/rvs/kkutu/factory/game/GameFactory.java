@@ -1,10 +1,10 @@
 package kr.rvs.kkutu.factory.game;
 
-import kr.rvs.kkutu.game.Game;
+import kr.rvs.kkutu.game.RoomInfo;
 import kr.rvs.kkutu.game.GameOption;
 import kr.rvs.kkutu.game.Profile;
 import kr.rvs.kkutu.game.Room;
-import kr.rvs.kkutu.game.RoomPlayer;
+import kr.rvs.kkutu.game.Bot;
 import kr.rvs.kkutu.game.User;
 import kr.rvs.kkutu.gson.JsonObjectWrapper;
 
@@ -18,11 +18,13 @@ public interface GameFactory {
 
     User.Data createUserData(JsonObjectWrapper json);
 
+    User.Status createStatus(JsonObjectWrapper json);
+
     Room createRoom(JsonObjectWrapper json);
 
-    RoomPlayer createRoomPlayer(JsonObjectWrapper json);
+    Bot createRoomPlayer(JsonObjectWrapper json);
 
-    Game createGame(JsonObjectWrapper json);
+    RoomInfo createRoomInfo(JsonObjectWrapper json);
 
     GameOption createGameOption(JsonObjectWrapper json);
 }

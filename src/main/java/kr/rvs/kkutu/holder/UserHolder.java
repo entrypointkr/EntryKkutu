@@ -2,9 +2,9 @@ package kr.rvs.kkutu.holder;
 
 import kr.rvs.kkutu.game.User;
 import kr.rvs.kkutu.gui.LobbyController;
-import kr.rvs.kkutu.util.Servers;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,13 +13,12 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by Junhyeong Lim on 2017-10-12.
  */
 public class UserHolder {
-    private final Servers server;
-    private final LobbyController controller;
+    private static final UserHolder INSTANCE = new UserHolder();
+    private LobbyController controller;
     private final Map<String, User> userMap = new ConcurrentHashMap<>();
 
-    public UserHolder(Servers server, LobbyController controller) {
-        this.server = server;
-        this.controller = controller;
+    public static UserHolder getInst() {
+        return INSTANCE;
     }
 
     private void refresh() {
@@ -27,7 +26,7 @@ public class UserHolder {
     }
 
     public void add(User user) {
-        userMap.put(user.getId(), user);
+        userMap.put(user.id(), user);
         refresh();
     }
 
@@ -46,7 +45,11 @@ public class UserHolder {
         return Optional.ofNullable(userMap.get(key));
     }
 
-    public Collection<User> getUsers() {
-        return userMap.values();
+    public List<User> getUsers() {
+        return new ArrayList<>(userMap.values());
+    }
+
+    public void setController(LobbyController controller) {
+        this.controller = controller;
     }
 }

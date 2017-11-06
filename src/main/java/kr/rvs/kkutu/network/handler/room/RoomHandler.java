@@ -1,4 +1,4 @@
-package kr.rvs.kkutu.network.handler.lobby;
+package kr.rvs.kkutu.network.handler.room;
 
 import kr.rvs.kkutu.gui.RoomController;
 import kr.rvs.kkutu.network.packet.Packet;

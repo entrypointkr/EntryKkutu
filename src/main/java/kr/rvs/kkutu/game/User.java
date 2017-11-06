@@ -1,17 +1,19 @@
 package kr.rvs.kkutu.game;
 
+import javafx.scene.image.Image;
+
 /**
  * Created by Junhyeong Lim on 2017-10-12.
  */
-public class User {
+public class User implements Player {
     private final String id;
     private final Data data;
     private final boolean guest;
-    private final Game game;
+    private final Status game;
     private final Profile profile;
     private final int money;
 
-    public User(String id, Data data, boolean guest, Game game, Profile profile, int money) {
+    public User(String id, Data data, boolean guest, Status game, Profile profile, int money) {
         this.id = id;
         this.data = data;
         this.guest = guest;
@@ -20,8 +22,19 @@ public class User {
         this.money = money;
     }
 
-    public String getId() {
+    @Override
+    public String id() {
         return id;
+    }
+
+    @Override
+    public Image image() {
+        return getProfile().getImage();
+    }
+
+    @Override
+    public String name() {
+        return getProfile().getName();
     }
 
     public Data getData() {
@@ -32,7 +45,7 @@ public class User {
         return guest;
     }
 
-    public Game getGame() {
+    public Status getGame() {
         return game;
     }
 
@@ -77,6 +90,30 @@ public class User {
 
         public void setScore(int score) {
             this.score = score;
+        }
+    }
+
+    public static class Status {
+        private final boolean ready;
+        private final int team;
+        private final int practice;
+
+        public Status(boolean ready, int team, int practice) {
+            this.ready = ready;
+            this.team = team;
+            this.practice = practice;
+        }
+
+        public boolean isReady() {
+            return ready;
+        }
+
+        public int getTeam() {
+            return team;
+        }
+
+        public int getPractice() {
+            return practice;
         }
     }
 }

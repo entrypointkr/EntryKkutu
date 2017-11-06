@@ -19,7 +19,7 @@ public class EntryKkutu extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Server server = new Server(Servers.KKUTU_COKR, 0);
-        PacketManager packetManager = new PacketManager(server.getServer());
+        PacketManager packetManager = new PacketManager(server.getServer().getPacketFactory(), server.getServer().getGameFactory());
         new WebSocketClient("lobby", server.getUri(), packetManager).start();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));

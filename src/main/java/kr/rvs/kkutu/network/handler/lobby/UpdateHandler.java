@@ -16,18 +16,16 @@ import kr.rvs.kkutu.network.packet.impl.in.WelcomePacket;
  * Created by Junhyeong Lim on 2017-10-12.
  */
 public class UpdateHandler implements PacketHandler {
-    private final UserHolder userHolder;
-    private final RoomHolder roomHolder;
     private final LobbyController controller;
 
-    public UpdateHandler(UserHolder userHolder, RoomHolder roomHolder, LobbyController controller) {
-        this.userHolder = userHolder;
-        this.roomHolder = roomHolder;
+    public UpdateHandler(LobbyController controller) {
         this.controller = controller;
     }
 
     @Override
     public void handle(PacketHandlers handlers, Packet packet) {
+        UserHolder userHolder = UserHolder.getInst();
+        RoomHolder roomHolder = RoomHolder.getInst();
         if (packet instanceof WelcomePacket) {
             WelcomePacket welcomePacket = ((WelcomePacket) packet);
             userHolder.add(welcomePacket.userMap);
@@ -42,7 +40,7 @@ public class UpdateHandler implements PacketHandler {
         } else if (packet instanceof RoomPacket) {
             RoomPacket roomPacket = ((RoomPacket) packet);
             Room room = roomPacket.room;
-            if (!room.getPlayers().isEmpty()) {
+            if (!room.getPlayerMap().isEmpty()) {
                 roomHolder.add(room);
             } else {
                 roomHolder.remove(room.getId());

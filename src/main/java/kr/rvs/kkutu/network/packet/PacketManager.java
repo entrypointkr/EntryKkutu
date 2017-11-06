@@ -8,6 +8,7 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import kr.rvs.kkutu.factory.game.GameFactory;
 import kr.rvs.kkutu.factory.packet.PacketFactory;
 import kr.rvs.kkutu.gson.JsonObjectWrapper;
+import kr.rvs.kkutu.util.Server;
 import kr.rvs.kkutu.util.Servers;
 import kr.rvs.kkutu.util.Static;
 
@@ -27,10 +28,6 @@ public class PacketManager {
     public PacketManager(PacketFactory packetFactory, GameFactory gameFactory) {
         this.packetFactory = packetFactory;
         this.gameFactory = gameFactory;
-    }
-
-    public PacketManager(Servers server) {
-        this(server.getPacketFactory(), server.getGameFactory());
     }
 
     public void receive(JsonObject json) {

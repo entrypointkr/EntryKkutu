@@ -5,14 +5,14 @@ import java.util.List;
 /**
  * Created by Junhyeong Lim on 2017-10-07.
  */
-public class Game {
+public class RoomInfo {
     private final int round;
     private final int turn;
     private final List<Object> seq;
     private final String title;
     private final String mission;
 
-    public Game(int round, int turn, List<Object> seq, String title, String mission) {
+    public RoomInfo(int round, int turn, List<Object> seq, String title, String mission) {
         this.round = round;
         this.turn = turn;
         this.seq = seq;
@@ -25,7 +25,7 @@ public class Game {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Game game = (Game) o;
+        RoomInfo game = (RoomInfo) o;
 
         if (round != game.round) return false;
         if (turn != game.turn) return false;

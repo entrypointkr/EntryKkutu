@@ -41,6 +41,10 @@ public class JsonObjectWrapper {
         return ret;
     }
 
+    public JsonObject getHandle() {
+        return object;
+    }
+
     static class JsonNullSafer extends JsonElement {
         public static final JsonNullSafer INST = new JsonNullSafer();
 
