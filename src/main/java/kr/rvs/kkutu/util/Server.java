@@ -21,6 +21,9 @@ public class Server {
         try {
             URL url = new URL(server.getStringURL() + "?server=" + serverIndex);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; ko) EntryKKuTu");
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.setRequestProperty("Content-Language", "ko-KR");
             conn.setRequestMethod("GET");
 
             try (BufferedReader in = new BufferedReader(
