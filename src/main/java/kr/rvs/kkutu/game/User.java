@@ -1,52 +1,32 @@
 package kr.rvs.kkutu.game;
 
-import javafx.scene.image.Image;
+import com.google.gson.JsonObject;
+import kr.rvs.kkutu.util.Validate;
 
-/**
- * Created by Junhyeong Lim on 2017-10-12.
- */
-public class User implements Player {
+import java.util.Objects;
+
+public class User {
     private final String id;
-    private final Data data;
-    private final boolean guest;
-    private final Status game;
     private final Profile profile;
     private final int money;
 
-    public User(String id, Data data, boolean guest, Status game, Profile profile, int money) {
+    public static User of(JsonObject json) {
+        Validate.isTrue(json.has("id") && json.has("profile"), "Malformed user format.");
+        return new User(
+                json.get("id").getAsString(),
+                Profile.of(json.get("profile").getAsJsonObject()),
+                json.get("money").getAsInt()
+        );
+    }
+
+    public User(String id, Profile profile, int money) {
         this.id = id;
-        this.data = data;
-        this.guest = guest;
-        this.game = game;
         this.profile = profile;
         this.money = money;
     }
 
-    @Override
-    public String id() {
+    public String getId() {
         return id;
-    }
-
-    @Override
-    public Image image() {
-        return getProfile().getImage();
-    }
-
-    @Override
-    public String name() {
-        return getProfile().getName();
-    }
-
-    public Data getData() {
-        return data;
-    }
-
-    public boolean isGuest() {
-        return guest;
-    }
-
-    public Status getGame() {
-        return game;
     }
 
     public Profile getProfile() {
@@ -57,63 +37,22 @@ public class User implements Player {
         return money;
     }
 
-    public static class Data {
-        private int connectData;
-        private int playTime;
-        private int score;
-
-        public Data(int connectData, int playTime, int score) {
-            this.connectData = connectData;
-            this.playTime = playTime;
-            this.score = score;
-        }
-
-        public int getConnectData() {
-            return connectData;
-        }
-
-        public void setConnectData(int connectData) {
-            this.connectData = connectData;
-        }
-
-        public int getPlayTime() {
-            return playTime;
-        }
-
-        public void setPlayTime(int playTime) {
-            this.playTime = playTime;
-        }
-
-        public int getScore() {
-            return score;
-        }
-
-        public void setScore(int score) {
-            this.score = score;
-        }
+    @Override
+    public String toString() {
+        return getProfile().getNick();
     }
 
-    public static class Status {
-        private final boolean ready;
-        private final int team;
-        private final int practice;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
 
-        public Status(boolean ready, int team, int practice) {
-            this.ready = ready;
-            this.team = team;
-            this.practice = practice;
-        }
+    @Override
+    public int hashCode() {
 
-        public boolean isReady() {
-            return ready;
-        }
-
-        public int getTeam() {
-            return team;
-        }
-
-        public int getPractice() {
-            return practice;
-        }
+        return Objects.hash(id);
     }
 }

@@ -1,31 +1,41 @@
 package kr.rvs.kkutu.game;
 
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.JsonObject;
+import kr.rvs.kkutu.util.Gsons;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Objects;
 
-/**
- * Created by Junhyeong Lim on 2017-10-07.
- */
 public class Room {
-    private final int id;
+    private final String id;
     private final String channel;
-    private final String title;
-    private final boolean password;
-    private final int limit;
-    private final int mode;
-    private final int round;
-    private final int time;
-    private final String master;
-    private final Map<String, User> playerMap = new HashMap<>();
-    @SerializedName("gaming")
-    private final boolean ingame;
-    private final RoomInfo game;
-    @SerializedName("opts")
-    private final GameOption option;
+    private String title;
+    private boolean password;
+    private int limit;
+    private int mode;
+    private int round;
+    private int time;
+    private String master;
+    private List players;
+    private boolean ingame;
 
-    public Room(int id, String channel, String title, boolean password, int limit, int mode, int round, int time, String master, boolean ingame, RoomInfo game, GameOption option) {
+    public static Room of(JsonObject json) {
+        return new Room(
+                json.get("id").getAsString(),
+                json.get("channel").getAsString(),
+                json.get("title").getAsString(),
+                json.get("password").getAsBoolean(),
+                json.get("limit").getAsInt(),
+                json.get("mode").getAsInt(),
+                json.get("round").getAsInt(),
+                json.get("time").getAsInt(),
+                json.has("master") ? json.get("master").getAsString() : "null",
+                Gsons.remapJsonArray(json.get("players").getAsJsonArray(), element -> element.isJsonPrimitive() ? element.getAsString() : "bot"),
+                json.get("gaming").getAsBoolean()
+        );
+    }
+
+    public Room(String id, String channel, String title, boolean password, int limit, int mode, int round, int time, String master, List players, boolean ingame) {
         this.id = id;
         this.channel = channel;
         this.title = title;
@@ -35,25 +45,23 @@ public class Room {
         this.round = round;
         this.time = time;
         this.master = master;
+        this.players = players;
         this.ingame = ingame;
-        this.game = game;
-        this.option = option;
     }
 
-    public void addUser(User user) {
-        if (user != null)
-            this.playerMap.put(user.getId(), user);
+    public void update(Room room) {
+        this.title = room.title;
+        this.password = room.password;
+        this.limit = room.limit;
+        this.mode = room.mode;
+        this.round = room.round;
+        this.time = room.time;
+        this.master = room.master;
+        this.players = room.players;
+        this.ingame = room.ingame;
     }
 
-    public String getTotalPlayersStr() {
-        return getPlayerMap().size() + "/" + getLimit();
-    }
-
-    public boolean isJoinable() {
-        return !isIngame() && playerMap.size() < limit;
-    }
-
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -65,7 +73,7 @@ public class Room {
         return title;
     }
 
-    public boolean isPrivate() {
+    public boolean isPassword() {
         return password;
     }
 
@@ -73,8 +81,8 @@ public class Room {
         return limit;
     }
 
-    public GameType getMode() {
-        return GameType.getById(mode);
+    public int getMode() {
+        return mode;
     }
 
     public int getRound() {
@@ -89,34 +97,29 @@ public class Room {
         return master;
     }
 
-    public Map<String, User> getPlayerMap() {
-        return playerMap;
+    public List getPlayers() {
+        return players;
     }
 
     public boolean isIngame() {
         return ingame;
     }
 
-    public RoomInfo getGame() {
-        return game;
-    }
-
-    public GameOption getOption() {
-        return option;
+    @Override
+    public String toString() {
+        return title;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Room room = (Room) o;
-
-        return id == room.id;
+        return Objects.equals(id, room.id);
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return Objects.hash(id);
     }
 }
