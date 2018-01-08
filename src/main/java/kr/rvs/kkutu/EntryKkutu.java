@@ -1,41 +1,39 @@
 package kr.rvs.kkutu;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import kr.rvs.kkutu.gui.LobbyController;
-import kr.rvs.kkutu.network.netty.WebSocketClient;
-import kr.rvs.kkutu.network.packet.PacketManager;
-import kr.rvs.kkutu.util.Server;
-import kr.rvs.kkutu.util.Servers;
+import kr.rvs.kkutu.network.impl.KkutuKoreaPacketFactory;
+import kr.rvs.kkutu.network.netty.WebSocket;
 
-/**
- * Created by Junhyeong Lim on 2017-10-02.
- */
+import java.net.URI;
+
 public class EntryKkutu extends Application {
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        Server server = new Server(Servers.KKUTU_COKR, 0);
-        PacketManager packetManager = new PacketManager(server.getServer().getPacketFactory(), server.getServer().getGameFactory());
-        new WebSocketClient("lobby", server.getUri(), packetManager).start();
+    public void start(Stage stage) throws Exception {
+        int width = 1000;
+        int height = 550;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Lobby.fxml"));
-        loader.setController(new LobbyController(server, packetManager));
-        Parent root = loader.load();
-        int minWidth = 1000;
-        int minHeight = 550;
+        loader.setController(LobbyController.get());
 
-        primaryStage.setTitle("EntryKkutu");
-        primaryStage.setScene(new Scene(root, minWidth, minHeight));
-        primaryStage.setOnCloseRequest(e -> {
-            Platform.exit();
-            System.exit(0);
-        });
-        primaryStage.setMinWidth(minWidth);
-        primaryStage.setMinHeight(minHeight);
-        primaryStage.show();
+        Parent root = loader.load();
+        stage.setTitle("EntryKkutu");
+        stage.setScene(new Scene(root, width, height));
+        stage.setMinWidth(width);
+        stage.setMinHeight(height);
+        stage.setOnCloseRequest(e -> System.exit(0));
+        stage.show();
+
+        WebSocket client = new WebSocket(
+                URI.create("wss://ws.kkutu.co.kr:8080/2c727562e48cc83922ee306e9af3ed957500ed12833a0d4e8c8a0127430d219ac015a9670ceb4905e4f5abe8a422dc56"),
+                new KkutuKoreaPacketFactory()
+        );
+        client.start();
+
+        LobbyController.get().setServerName("끄투코리아");
     }
 }

@@ -1,10 +1,9 @@
 package kr.rvs.kkutu.network.packet;
 
-import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonWriter;
 
-/**
- * Created by Junhyeong Lim on 2017-10-12.
- */
+import java.io.IOException;
+
 public interface Writable {
-    void write(JsonObject json);
+    void write(JsonWriter writer) throws IOException;
 }

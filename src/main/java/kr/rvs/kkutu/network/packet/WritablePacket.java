@@ -1,7 +1,4 @@
 package kr.rvs.kkutu.network.packet;
 
-/**
- * Created by Junhyeong Lim on 2017-10-12.
- */
-public interface WritablePacket extends Packet, Writable {
+public interface WritablePacket extends Writable, Packet {
 }
