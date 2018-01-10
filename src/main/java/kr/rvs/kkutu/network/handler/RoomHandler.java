@@ -6,10 +6,9 @@ import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.game.room.RoomPlayer;
 import kr.rvs.kkutu.network.PacketHandler;
 import kr.rvs.kkutu.network.packet.Packet;
-import kr.rvs.kkutu.network.packet.impl.in.ChatInPacket;
 import kr.rvs.kkutu.network.packet.impl.in.RoomJoinPacket;
-import kr.rvs.kkutu.network.packet.impl.in.RoomQuitPacket;
 import kr.rvs.kkutu.network.packet.impl.in.RoomPlayerUpdatePacket;
+import kr.rvs.kkutu.network.packet.impl.in.RoomQuitPacket;
 
 public class RoomHandler implements PacketHandler {
     private final Room room;

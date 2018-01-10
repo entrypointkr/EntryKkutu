@@ -2,14 +2,11 @@ package kr.rvs.kkutu.game.room;
 
 import kr.rvs.kkutu.game.User;
 import kr.rvs.kkutu.game.holder.UserHolder;
-import kr.rvs.kkutu.gui.RoomPlayerTileController;
 
 import java.util.Optional;
 
 public class RoomUnknownPlayer extends RoomPlayer {
     public static final RoomPlayer DEFAULT = new RoomPlayer() {
-        private boolean ready = false;
-
         @Override
         public String getId() {
             return "unknown";

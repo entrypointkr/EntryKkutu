@@ -5,13 +5,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import kr.rvs.kkutu.gui.Chatable;
-import kr.rvs.kkutu.gui.LobbyController;
 import kr.rvs.kkutu.network.PacketHandler;
-import kr.rvs.kkutu.network.LobbyPacketManager;
 import kr.rvs.kkutu.network.PacketManager;
 import kr.rvs.kkutu.network.packet.Packet;
-import kr.rvs.kkutu.network.packet.impl.in.ChatInPacket;
 import kr.rvs.kkutu.network.packet.impl.ChatOutPacket;
+import kr.rvs.kkutu.network.packet.impl.in.ChatInPacket;
 import kr.rvs.kkutu.network.packet.impl.in.YellPacket;
 
 public class ChatHandler implements PacketHandler, EventHandler<KeyEvent> {

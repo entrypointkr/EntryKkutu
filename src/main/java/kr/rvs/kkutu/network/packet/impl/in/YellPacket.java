@@ -14,7 +14,7 @@ public class YellPacket implements ReadablePacket {
 
     @Override
     public void read(JsonObject json) {
-        Validate.isTrue(json.has("value"));
+        Validate.isTrue(json.has("value"), json.toString());
         this.value = json.get("value").getAsString();
     }
 
