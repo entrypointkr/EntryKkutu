@@ -1,16 +1,17 @@
 package kr.rvs.kkutu.network.handler;
 
-import javafx.application.Platform;
-import kr.rvs.kkutu.game.Room;
-import kr.rvs.kkutu.game.RoomHolder;
-import kr.rvs.kkutu.game.UserHolder;
+import kr.rvs.kkutu.game.User;
+import kr.rvs.kkutu.game.holder.RoomHolder;
+import kr.rvs.kkutu.game.holder.UserHolder;
+import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.gui.LobbyController;
 import kr.rvs.kkutu.network.PacketHandler;
 import kr.rvs.kkutu.network.packet.Packet;
-import kr.rvs.kkutu.network.packet.impl.ConnectPacket;
-import kr.rvs.kkutu.network.packet.impl.DisconnectPacket;
-import kr.rvs.kkutu.network.packet.impl.RoomPacket;
-import kr.rvs.kkutu.network.packet.impl.WelcomePacket;
+import kr.rvs.kkutu.network.packet.impl.in.ConnectPacket;
+import kr.rvs.kkutu.network.packet.impl.in.DisconnectPacket;
+import kr.rvs.kkutu.network.packet.impl.in.RoomPacket;
+import kr.rvs.kkutu.network.packet.impl.in.WelcomePacket;
+import kr.rvs.kkutu.util.Static;
 
 public class UpdateHandler implements PacketHandler {
     @Override
@@ -24,16 +25,18 @@ public class UpdateHandler implements PacketHandler {
         } else if (packet instanceof RoomPacket) {
             RoomPacket roomPacket = ((RoomPacket) packet);
             Room room = roomPacket.getRoom();
-            if (room.getPlayers().isEmpty()) {
+            if (room.isEmpty()) {
                 RoomHolder.remove(room.getId());
             } else {
                 RoomHolder.put(room);
             }
         } else if (packet instanceof WelcomePacket) {
             WelcomePacket welcomePacket = ((WelcomePacket) packet);
-            UserHolder.join(welcomePacket.getUserMap());
-            RoomHolder.put(welcomePacket.getRoomMap());
-            Platform.runLater(() -> LobbyController.get().myProfileInit(
+            welcomePacket.getUsers().entrySet().forEach(entry ->
+                    UserHolder.join(User.of(entry.getValue().getAsJsonObject())));
+            welcomePacket.getRooms().entrySet().forEach(entry ->
+                    RoomHolder.put(Room.of(entry.getValue().getAsJsonObject())));
+            Static.runOnMain(() -> LobbyController.get().myProfileInit(
                     UserHolder.getOrThrow(welcomePacket.getId())));
         }
     }

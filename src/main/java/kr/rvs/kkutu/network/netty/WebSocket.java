@@ -17,6 +17,7 @@ import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketCl
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import kr.rvs.kkutu.network.PacketFactory;
+import kr.rvs.kkutu.network.LobbyPacketManager;
 import kr.rvs.kkutu.network.PacketManager;
 import kr.rvs.kkutu.util.Static;
 
@@ -24,12 +25,16 @@ import java.net.URI;
 
 public class WebSocket extends Thread {
     private final EventLoopGroup group = new NioEventLoopGroup();
+    private final String name;
     private final URI uri;
     private final PacketFactory packetFactory;
+    private final PacketManager packetManager;
 
-    public WebSocket(URI uri, PacketFactory packetFactory) {
+    public WebSocket(String name, URI uri, PacketFactory packetFactory, PacketManager packetManager) {
+        this.name = name;
         this.uri = uri;
         this.packetFactory = packetFactory;
+        this.packetManager = packetManager;
     }
 
     @Override
@@ -59,17 +64,17 @@ public class WebSocket extends Thread {
                                     new HttpClientCodec(),
                                     new HttpObjectAggregator(Integer.MAX_VALUE),
                                     WebSocketClientCompressionHandler.INSTANCE,
-                                    new WebSocketMonitor("Test"),
+                                    new WebSocketMonitor(name),
                                     new PacketEncoder(),
                                     handler,
                                     new PacketDecoder(packetFactory),
-                                    PacketManager.get()
+                                    packetManager
                             );
                         }
                     });
 
             Channel ch = bs.connect(uri.getHost(), uri.getPort()).sync().channel();
-            PacketManager.get().init(ch);
+            packetManager.init(ch);
             handler.handshakeFuture().sync();
 
             ch.closeFuture().sync();

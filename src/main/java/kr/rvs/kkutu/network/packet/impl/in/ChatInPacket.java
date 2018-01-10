@@ -1,4 +1,4 @@
-package kr.rvs.kkutu.network.packet.impl;
+package kr.rvs.kkutu.network.packet.impl.in;
 
 import com.google.gson.JsonObject;
 import kr.rvs.kkutu.game.Profile;

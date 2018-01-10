@@ -1,29 +1,25 @@
-package kr.rvs.kkutu.game;
+package kr.rvs.kkutu.game.holder;
 
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import kr.rvs.kkutu.game.User;
 import kr.rvs.kkutu.gui.LobbyController;
+import kr.rvs.kkutu.util.Static;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 public class UserHolder {
-    private static final Map<String, User> USER_MAP = new LinkedHashMap<>();
+    private static final Map<String, User> USER_MAP = new ConcurrentHashMap<>();
 
     private static void callback(Consumer<ObservableList<User>> consumer) {
-        Platform.runLater(() -> consumer.accept(LobbyController.get().userView.getItems()));
+        Static.runOnMain(() -> consumer.accept(LobbyController.get().userView.getItems()));
     }
 
     public static void join(User user) {
         USER_MAP.put(user.getId(), user);
         callback(items -> items.add(user));
-    }
-
-    public static void join(Map<String, User> map) {
-        USER_MAP.putAll(map);
-        callback(items -> items.addAll(map.values()));
     }
 
     public static void quit(String id) {
