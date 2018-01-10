@@ -1,22 +1,20 @@
 package kr.rvs.kkutu.gui;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import kr.rvs.kkutu.game.Profile;
-import kr.rvs.kkutu.game.Room;
+import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.game.User;
-import kr.rvs.kkutu.network.PacketManager;
+import kr.rvs.kkutu.network.LobbyPacketManager;
 import kr.rvs.kkutu.network.handler.ChatHandler;
+import kr.rvs.kkutu.network.handler.RoomJoinHandler;
 import kr.rvs.kkutu.network.handler.UpdateHandler;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.ResourceBundle;
 
-public class LobbyController implements Initializable {
+public class LobbyController implements Initializable, Chatable {
     private static final LobbyController instance = new LobbyController();
 
     public TitledPane titledUsersPane;
@@ -41,11 +39,13 @@ public class LobbyController implements Initializable {
         titledUsersPane.setText(name);
     }
 
+    @Override
     public void chat(String message) {
         chatArea.appendText(message);
         chatArea.appendText("\n");
     }
 
+    @Override
     public void chat(Profile profile, String message) {
         chat(String.format("%s: %s", profile.getNick(), message));
     }
@@ -63,13 +63,16 @@ public class LobbyController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ChatHandler chatHandler = new ChatHandler();
+        ChatHandler chatHandler = new ChatHandler(this, LobbyPacketManager.get());
         UpdateHandler updateHandler = new UpdateHandler();
-        PacketManager.get().addHandler(
+        RoomJoinHandler roomHandler = new RoomJoinHandler();
+        LobbyPacketManager.get().addHandler(
                 chatHandler,
-                updateHandler
+                updateHandler,
+                roomHandler
         );
         chatField.setOnKeyPressed(chatHandler);
+        roomView.setRowFactory(table -> new RoomTableRow(roomHandler));
 
         setupInstantText(chatField);
         setupInstantText(userSearchField);

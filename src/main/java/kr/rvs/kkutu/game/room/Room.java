@@ -1,10 +1,14 @@
-package kr.rvs.kkutu.game;
+package kr.rvs.kkutu.game.room;
 
 import com.google.gson.JsonObject;
+import kr.rvs.kkutu.game.Profile;
+import kr.rvs.kkutu.gui.RoomController;
+import kr.rvs.kkutu.network.PacketManager;
+import kr.rvs.kkutu.network.packet.impl.out.RoomReadyPacket;
 import kr.rvs.kkutu.util.Gsons;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Room {
     private final String id;
@@ -16,8 +20,10 @@ public class Room {
     private int round;
     private int time;
     private String master;
-    private List players;
+    private Map<String, RoomPlayer> playerMap = Collections.synchronizedMap(new LinkedHashMap<>());
     private boolean ingame;
+    private RoomController controller;
+    private PacketManager packetManager;
 
     public static Room of(JsonObject json) {
         return new Room(
@@ -30,12 +36,12 @@ public class Room {
                 json.get("round").getAsInt(),
                 json.get("time").getAsInt(),
                 json.has("master") ? json.get("master").getAsString() : "null",
-                Gsons.remapJsonArray(json.get("players").getAsJsonArray(), element -> element.isJsonPrimitive() ? element.getAsString() : "bot"),
+                Gsons.remapJsonArray(json.get("players").getAsJsonArray(), RoomPlayer::get),
                 json.get("gaming").getAsBoolean()
         );
     }
 
-    public Room(String id, String channel, String title, boolean password, int limit, int mode, int round, int time, String master, List players, boolean ingame) {
+    public Room(String id, String channel, String title, boolean password, int limit, int mode, int round, int time, String master, Collection<RoomPlayer> players, boolean ingame) {
         this.id = id;
         this.channel = channel;
         this.title = title;
@@ -45,8 +51,17 @@ public class Room {
         this.round = round;
         this.time = time;
         this.master = master;
-        this.players = players;
         this.ingame = ingame;
+
+        players.forEach(player -> playerMap.put(player.getId(), player));
+    }
+
+    public void chat(Profile profile, String message) {
+        controller.chat(profile, message);
+    }
+
+    public Optional<RoomPlayer> getPlayer(String id) {
+        return Optional.ofNullable(playerMap.get(id));
     }
 
     public void update(Room room) {
@@ -57,8 +72,44 @@ public class Room {
         this.round = room.round;
         this.time = room.time;
         this.master = room.master;
-        this.players = room.players;
         this.ingame = room.ingame;
+
+        this.playerMap.clear();
+        this.playerMap.putAll(room.playerMap);
+    }
+
+    public void join(RoomPlayer player) {
+        controller.join(player);
+        playerMap.put(player.getId(), player);
+    }
+
+    public void quit(String id) {
+        controller.quit(id);
+        playerMap.remove(id);
+    }
+
+    public void ready() {
+        packetManager.sendPacket(new RoomReadyPacket());
+    }
+
+    public boolean isJoinable() {
+        return !isIngame() && playerMap.size() < limit;
+    }
+
+    public boolean isEmpty() {
+        return playerMap.isEmpty();
+    }
+
+    public boolean isMaster(String id) {
+        return master.equals(id);
+    }
+
+    public boolean isMaster(RoomPlayer player) {
+        return isMaster(player.getId());
+    }
+
+    public void roomInit(RoomController controller) {
+        playerMap.values().forEach(controller::join);
     }
 
     public String getId() {
@@ -97,12 +148,20 @@ public class Room {
         return master;
     }
 
-    public List getPlayers() {
-        return players;
-    }
-
     public boolean isIngame() {
         return ingame;
+    }
+
+    public void setController(RoomController controller) {
+        this.controller = controller;
+    }
+
+    public void setPacketManager(PacketManager manager) {
+        this.packetManager = manager;
+    }
+
+    public PacketManager getPacketManager() {
+        return packetManager;
     }
 
     @Override
