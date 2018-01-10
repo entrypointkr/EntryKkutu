@@ -17,7 +17,6 @@ import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketCl
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import kr.rvs.kkutu.network.PacketFactory;
-import kr.rvs.kkutu.network.LobbyPacketManager;
 import kr.rvs.kkutu.network.PacketManager;
 import kr.rvs.kkutu.util.Static;
 

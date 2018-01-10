@@ -8,7 +8,6 @@ import kr.rvs.kkutu.network.packet.impl.out.RoomReadyPacket;
 import kr.rvs.kkutu.util.Gsons;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class Room {
     private final String id;
@@ -22,6 +21,7 @@ public class Room {
     private String master;
     private Map<String, RoomPlayer> playerMap = Collections.synchronizedMap(new LinkedHashMap<>());
     private boolean ingame;
+
     private RoomController controller;
     private PacketManager packetManager;
 
