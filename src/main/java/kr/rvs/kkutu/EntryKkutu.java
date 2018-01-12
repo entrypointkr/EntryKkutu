@@ -14,6 +14,7 @@ import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.gui.LobbyController;
 import kr.rvs.kkutu.gui.RoomController;
 import kr.rvs.kkutu.network.LobbyPacketManager;
+import kr.rvs.kkutu.network.PacketManager;
 import kr.rvs.kkutu.network.handler.ErrorHandler;
 import kr.rvs.kkutu.network.impl.KkutuKoreaPacketFactory;
 import kr.rvs.kkutu.network.netty.WebSocket;
@@ -36,7 +37,10 @@ public class EntryKkutu extends Application {
         return lang;
     }
 
-    public static void showRoom(Room room, EventHandler<WindowEvent> closeCallback) {
+    public static void initRoom(int channel, Room room) {
+        PacketManager packetManager = new PacketManager();
+        room.setPacketManager(packetManager);
+
         EntryKkutu.runOnMain(() -> {
             FXMLLoader loader = new FXMLLoader(EntryKkutu.class.getResource("/Room.fxml"));
             RoomController controller = new RoomController(room);
@@ -53,8 +57,18 @@ public class EntryKkutu extends Application {
                 stage.setScene(new Scene(root, width, height));
                 stage.setMinWidth(width);
                 stage.setMinHeight(height);
-                stage.setOnCloseRequest(closeCallback);
+                stage.setOnCloseRequest(e -> packetManager.close());
                 stage.show();
+
+                new WebSocket(
+                        "Room",
+                        URI.create(String.format("wss://ws.kkutu.co.kr:%s/2c727562e48cc83922ee306e9af3ed957500ed12833a0d4e8c8a0127430d219ac015a9670ceb4905e4f5abe8a422dc56&%s&%s",
+                                8495 + channel, channel, room.getId())),
+                        KkutuKoreaPacketFactory.get(),
+                        packetManager,
+                        () -> EntryKkutu.runOnMain(stage::close),
+                        true
+                ).start();
             } catch (IOException e) {
                 throw new IllegalStateException(e);
             }

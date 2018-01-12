@@ -13,7 +13,6 @@ import io.netty.handler.codec.http.HttpClientCodec;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.websocketx.WebSocketClientHandshakerFactory;
 import io.netty.handler.codec.http.websocketx.WebSocketVersion;
-import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketClientCompressionHandler;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import kr.rvs.kkutu.network.PacketFactory;
@@ -28,12 +27,26 @@ public class WebSocket extends Thread {
     private final URI uri;
     private final PacketFactory packetFactory;
     private final PacketManager packetManager;
+    private final Runnable closeCallback;
+    private final boolean monitor;
 
-    public WebSocket(String name, URI uri, PacketFactory packetFactory, PacketManager packetManager) {
+    public WebSocket(String name, URI uri, PacketFactory packetFactory, PacketManager packetManager, Runnable closeCallback, boolean monitor) {
         this.name = name;
         this.uri = uri;
         this.packetFactory = packetFactory;
         this.packetManager = packetManager;
+        this.closeCallback = closeCallback;
+        this.monitor = monitor;
+    }
+
+    public WebSocket(String name, URI uri, PacketFactory packetFactory, PacketManager packetManager, Runnable exitCallback) {
+        this(name, uri, packetFactory, packetManager, exitCallback, false);
+    }
+
+    public WebSocket(String name, URI uri, PacketFactory packetFactory, PacketManager packetManager) {
+        this(name, uri, packetFactory, packetManager, () -> {
+            // Empty
+        });
     }
 
     @Override
@@ -44,7 +57,7 @@ public class WebSocket extends Thread {
                             uri,
                             WebSocketVersion.V13,
                             null,
-                            true,
+                            false,
                             new DefaultHttpHeaders(),
                             Integer.MAX_VALUE
                     )
@@ -61,9 +74,12 @@ public class WebSocket extends Thread {
                                             .trustManager(InsecureTrustManagerFactory.INSTANCE).build()
                                             .newHandler(ch.alloc(), uri.getHost(), uri.getPort()),
                                     new HttpClientCodec(),
-                                    new HttpObjectAggregator(Integer.MAX_VALUE),
-                                    WebSocketClientCompressionHandler.INSTANCE,
-                                    new WebSocketMonitor(name),
+                                    new HttpObjectAggregator(Integer.MAX_VALUE)
+                            );
+                            if (monitor) {
+                                pipe.addLast(new WebSocketMonitor(name));
+                            }
+                            pipe.addLast(
                                     new PacketEncoder(),
                                     handler,
                                     new PacketDecoder(packetFactory),
@@ -77,6 +93,7 @@ public class WebSocket extends Thread {
             handler.handshakeFuture().sync();
 
             ch.closeFuture().sync();
+            closeCallback.run();
         } catch (Exception ex) {
             Static.log(ex);
         } finally {

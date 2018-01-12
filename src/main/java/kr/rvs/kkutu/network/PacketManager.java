@@ -27,7 +27,7 @@ public class PacketManager extends SimpleChannelInboundHandler<Packet> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Packet msg) throws Exception {
-        handlers.forEach(handler -> handler.handle(msg));
+        handlers.forEach(handler -> handler.handle(this, msg));
     }
 
     public void close() {

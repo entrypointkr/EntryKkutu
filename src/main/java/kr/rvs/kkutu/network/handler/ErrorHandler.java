@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import javafx.scene.control.Alert;
 import kr.rvs.kkutu.EntryKkutu;
 import kr.rvs.kkutu.network.PacketHandler;
+import kr.rvs.kkutu.network.PacketManager;
 import kr.rvs.kkutu.network.packet.Packet;
 import kr.rvs.kkutu.network.packet.in.ErrorPacket;
 
@@ -30,7 +31,7 @@ public class ErrorHandler implements PacketHandler {
     }
 
     @Override
-    public void handle(Packet packet) {
+    public void handle(PacketManager manager, Packet packet) {
         if (packet instanceof ErrorPacket) {
             ErrorPacket errorPacket = ((ErrorPacket) packet);
             String code = errorPacket.getCode();
