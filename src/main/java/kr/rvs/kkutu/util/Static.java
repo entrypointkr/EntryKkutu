@@ -1,7 +1,5 @@
 package kr.rvs.kkutu.util;
 
-import javafx.application.Platform;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

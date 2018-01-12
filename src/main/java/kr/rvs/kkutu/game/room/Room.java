@@ -1,7 +1,6 @@
 package kr.rvs.kkutu.game.room;
 
 import com.google.gson.JsonObject;
-import kr.rvs.kkutu.game.Profile;
 import kr.rvs.kkutu.gui.RoomController;
 import kr.rvs.kkutu.network.PacketManager;
 import kr.rvs.kkutu.network.packet.out.ChatOutPacket;

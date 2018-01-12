@@ -10,13 +10,9 @@ import kr.rvs.kkutu.gui.LobbyController;
 import kr.rvs.kkutu.network.LobbyPacketManager;
 import kr.rvs.kkutu.network.PacketHandler;
 import kr.rvs.kkutu.network.PacketManager;
-import kr.rvs.kkutu.network.impl.KkutuKoreaPacketFactory;
-import kr.rvs.kkutu.network.netty.WebSocket;
 import kr.rvs.kkutu.network.packet.Packet;
 import kr.rvs.kkutu.network.packet.in.PreRoomPacket;
 import kr.rvs.kkutu.network.packet.out.RoomEnterPacket;
-
-import java.net.URI;
 
 public class RoomJoinHandler implements PacketHandler, EventHandler<MouseEvent> {
     @Override
