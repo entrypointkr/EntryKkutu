@@ -13,6 +13,6 @@ public class KkutuKoreaPacketFactory extends PacketFactory {
     private KkutuKoreaPacketFactory() {
         super(ChatInPacket::new, ConnectPacket::new, DisconnectPacket::new, RoomPacket::new, WelcomePacket::new, YellPacket::new, PreRoomPacket::new, ErrorPacket::new,
                 RoomJoinPacket::new, RoomQuitPacket::new, RoomPlayerUpdatePacket::new,
-                GameReadyPacket::new, GameStartPacket::new, GameTurnStartPacket::new, GameTurnEndPacket::new, GameTurnErrorPacket::new);
+                GameReadyPacket::new, GameStartPacket::new, GameTurnStartPacket::new, GameTurnEndPacket::new, GameTurnErrorPacket::new, GameEndPacket::new);
     }
 }

@@ -3,7 +3,7 @@ package kr.rvs.kkutu.game;
 import com.google.gson.JsonObject;
 import kr.rvs.kkutu.util.Validate;
 
-public class Profile {
+public class Profile implements IdentityProvider {
     private final String id;
     private final String nick;
 
@@ -20,6 +20,7 @@ public class Profile {
         this.nick = nick;
     }
 
+    @Override
     public String getId() {
         return id;
     }

@@ -6,8 +6,9 @@ import javafx.scene.image.ImageView;
 import kr.rvs.kkutu.game.Profile;
 import kr.rvs.kkutu.game.User;
 import kr.rvs.kkutu.game.room.Room;
+import kr.rvs.kkutu.game.room.RoomData;
 import kr.rvs.kkutu.network.LobbyPacketManager;
-import kr.rvs.kkutu.network.handler.ChatHandler;
+import kr.rvs.kkutu.network.handler.LobbyChatHandler;
 import kr.rvs.kkutu.network.handler.ErrorHandler;
 import kr.rvs.kkutu.network.handler.RoomJoinHandler;
 import kr.rvs.kkutu.network.handler.UpdateHandler;
@@ -15,14 +16,14 @@ import kr.rvs.kkutu.network.handler.UpdateHandler;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LobbyController implements Initializable, Chatable {
+public class LobbyController implements Initializable {
     private static final LobbyController instance = new LobbyController();
 
     public TitledPane titledUsersPane;
     public ListView<User> userView;
     public TextField userSearchField;
 
-    public TableView<Room> roomView;
+    public TableView<RoomData> roomView;
     public TextArea chatArea;
     public TextField chatField;
 
@@ -40,13 +41,11 @@ public class LobbyController implements Initializable, Chatable {
         titledUsersPane.setText(name);
     }
 
-    @Override
     public void chat(String message) {
         chatArea.appendText(message);
         chatArea.appendText("\n");
     }
 
-    @Override
     public void chat(Profile profile, String message) {
         chat(String.format("%s: %s", profile.getNick(), message));
     }
@@ -64,7 +63,7 @@ public class LobbyController implements Initializable, Chatable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ChatHandler chatHandler = new ChatHandler(this, LobbyPacketManager.get());
+        LobbyChatHandler chatHandler = new LobbyChatHandler();
         UpdateHandler updateHandler = new UpdateHandler();
         RoomJoinHandler roomHandler = new RoomJoinHandler();
         LobbyPacketManager.get().addHandler(

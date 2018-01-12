@@ -2,10 +2,11 @@ package kr.rvs.kkutu.game.room;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import kr.rvs.kkutu.game.IdentityProvider;
 import kr.rvs.kkutu.game.holder.UserHolder;
 import kr.rvs.kkutu.gui.RoomPlayerTileController;
 
-public abstract class RoomPlayer {
+public abstract class RoomPlayer implements IdentityProvider {
     private RoomPlayerTileController tileController;
     private boolean ready = false;
 
@@ -28,8 +29,6 @@ public abstract class RoomPlayer {
     public void setTileController(RoomPlayerTileController tileController) {
         this.tileController = tileController;
     }
-
-    public abstract String getId();
 
     public abstract String getName();
 

@@ -6,7 +6,7 @@ import kr.rvs.kkutu.util.Validate;
 
 import java.util.Objects;
 
-public class User extends RoomPlayer {
+public class User extends RoomPlayer implements IdentityProvider {
     private final String id;
     private final Profile profile;
     private final int money;
@@ -29,6 +29,7 @@ public class User extends RoomPlayer {
         this.game = game;
     }
 
+    @Override
     public String getId() {
         return id;
     }

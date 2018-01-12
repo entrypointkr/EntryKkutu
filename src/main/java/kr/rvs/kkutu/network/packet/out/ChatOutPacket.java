@@ -7,9 +7,15 @@ import java.io.IOException;
 
 public class ChatOutPacket implements WritablePacket {
     private final String value;
+    private final boolean relay;
+
+    public ChatOutPacket(String value, boolean relay) {
+        this.value = value;
+        this.relay = relay;
+    }
 
     public ChatOutPacket(String value) {
-        this.value = value;
+        this(value, false);
     }
 
     @Override
@@ -20,5 +26,8 @@ public class ChatOutPacket implements WritablePacket {
     @Override
     public void write(JsonWriter writer) throws IOException {
         writer.name("value").value(value);
+        if (relay) {
+            writer.name("relay").value(relay);
+        }
     }
 }

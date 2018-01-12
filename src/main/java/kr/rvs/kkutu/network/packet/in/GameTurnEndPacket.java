@@ -4,11 +4,11 @@ import com.google.gson.JsonObject;
 import kr.rvs.kkutu.network.packet.ReadablePacket;
 
 public class GameTurnEndPacket implements ReadablePacket {
-    private String target;
-    private String mean;
     private boolean pass;
     private int score;
     private String word;
+    private String mean;
+    private String hint;
 
     @Override
     public String type() {
@@ -17,19 +17,17 @@ public class GameTurnEndPacket implements ReadablePacket {
 
     @Override
     public void read(JsonObject json) {
-        this.target = json.get("target").getAsString();
-        this.mean = json.get("mean").getAsString();
         this.pass = json.get("ok").getAsBoolean();
         this.score = json.get("score").getAsInt();
-        this.word = json.get("value").getAsString();
-    }
-
-    public String getTarget() {
-        return target;
-    }
-
-    public String getMean() {
-        return mean;
+        if (json.has("value")) {
+            this.word = json.get("value").getAsString();
+        }
+        if (json.has("mean")) {
+            this.mean = json.get("mean").getAsString();
+        }
+        if (json.has("hint")) {
+            this.hint = json.get("hint").getAsJsonObject().get("_id").getAsString();
+        }
     }
 
     public boolean isPass() {
@@ -42,5 +40,17 @@ public class GameTurnEndPacket implements ReadablePacket {
 
     public String getWord() {
         return word;
+    }
+
+    public String getMean() {
+        return mean;
+    }
+
+    public String getHint() {
+        return hint;
+    }
+
+    public String getWordAnyway() {
+        return isPass() ? getWord() : getHint();
     }
 }

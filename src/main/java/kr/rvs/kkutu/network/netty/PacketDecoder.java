@@ -22,7 +22,7 @@ public class PacketDecoder extends MessageToMessageDecoder<TextWebSocketFrame> {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, TextWebSocketFrame msg, List<Object> out) throws Exception {
-        JsonObject json = Gsons.getParser().parse(msg.text()).getAsJsonObject();
+        JsonObject json = new JsonParser().parse(msg.text()).getAsJsonObject();
         Validate.isTrue(json.has("type"), "Illegal packet format. " + json.toString());
 
         String type = json.get("type").getAsString();
