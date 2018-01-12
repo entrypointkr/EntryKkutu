@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class PacketManager extends SimpleChannelInboundHandler<Packet> {
+public class PacketManager extends SimpleChannelInboundHandler<Packet> {
     private Channel channel;
     private final List<PacketHandler> handlers = new ArrayList<>();
 

@@ -1,4 +1,4 @@
-package kr.rvs.kkutu.network.packet.impl.out;
+package kr.rvs.kkutu.network.packet.out;
 
 import com.google.gson.stream.JsonWriter;
 import kr.rvs.kkutu.network.packet.WritablePacket;

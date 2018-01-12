@@ -8,9 +8,9 @@ import kr.rvs.kkutu.gui.Chatable;
 import kr.rvs.kkutu.network.PacketHandler;
 import kr.rvs.kkutu.network.PacketManager;
 import kr.rvs.kkutu.network.packet.Packet;
-import kr.rvs.kkutu.network.packet.impl.ChatOutPacket;
-import kr.rvs.kkutu.network.packet.impl.in.ChatInPacket;
-import kr.rvs.kkutu.network.packet.impl.in.YellPacket;
+import kr.rvs.kkutu.network.packet.out.ChatOutPacket;
+import kr.rvs.kkutu.network.packet.in.ChatInPacket;
+import kr.rvs.kkutu.network.packet.in.YellPacket;
 
 public class ChatHandler implements PacketHandler, EventHandler<KeyEvent> {
     private final Chatable chatable;

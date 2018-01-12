@@ -1,26 +1,43 @@
 package kr.rvs.kkutu;
 
+import com.google.gson.JsonObject;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.gui.LobbyController;
 import kr.rvs.kkutu.gui.RoomController;
 import kr.rvs.kkutu.network.LobbyPacketManager;
+import kr.rvs.kkutu.network.handler.ErrorHandler;
 import kr.rvs.kkutu.network.impl.KkutuKoreaPacketFactory;
 import kr.rvs.kkutu.network.netty.WebSocket;
-import kr.rvs.kkutu.util.Static;
+import kr.rvs.kkutu.util.Gsons;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 
 public class EntryKkutu extends Application {
+    private static final JsonObject lang;
+
+    static {
+        InputStream in = ErrorHandler.class.getResourceAsStream("/lang/ko_kr.json");
+        lang = Gsons.getParser().parse(new InputStreamReader(in)).getAsJsonObject();
+    }
+
+    public static JsonObject getLang() {
+        return lang;
+    }
+
     public static void showRoom(Room room, EventHandler<WindowEvent> closeCallback) {
-        Static.runOnMain(() -> {
+        EntryKkutu.runOnMain(() -> {
             FXMLLoader loader = new FXMLLoader(EntryKkutu.class.getResource("/Room.fxml"));
             RoomController controller = new RoomController(room);
             loader.setController(controller);
@@ -42,6 +59,18 @@ public class EntryKkutu extends Application {
                 throw new IllegalStateException(e);
             }
         });
+    }
+
+    public static void runOnMain(Runnable runnable) {
+        if (Platform.isFxApplicationThread()) {
+            runnable.run();
+        } else {
+            Platform.runLater(runnable);
+        }
+    }
+
+    public static void showMessage(Alert.AlertType type, String message) {
+        runOnMain(() -> new Alert(type, message).show());
     }
 
     @Override

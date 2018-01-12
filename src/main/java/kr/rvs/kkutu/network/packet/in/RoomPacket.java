@@ -1,4 +1,4 @@
-package kr.rvs.kkutu.network.packet.impl.in;
+package kr.rvs.kkutu.network.packet.in;
 
 import com.google.gson.JsonObject;
 import kr.rvs.kkutu.game.room.Room;
