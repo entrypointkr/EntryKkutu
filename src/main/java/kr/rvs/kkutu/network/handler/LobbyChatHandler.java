@@ -9,9 +9,9 @@ import kr.rvs.kkutu.network.LobbyPacketManager;
 import kr.rvs.kkutu.network.PacketHandler;
 import kr.rvs.kkutu.network.PacketManager;
 import kr.rvs.kkutu.network.packet.Packet;
-import kr.rvs.kkutu.network.packet.out.ChatOutPacket;
 import kr.rvs.kkutu.network.packet.in.ChatInPacket;
 import kr.rvs.kkutu.network.packet.in.YellPacket;
+import kr.rvs.kkutu.network.packet.out.ChatOutPacket;
 
 public class LobbyChatHandler implements PacketHandler, EventHandler<KeyEvent> {
     @Override

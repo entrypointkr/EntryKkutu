@@ -8,7 +8,6 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import kr.rvs.kkutu.network.PacketFactory;
 import kr.rvs.kkutu.network.packet.Packet;
 import kr.rvs.kkutu.network.packet.Readable;
-import kr.rvs.kkutu.util.Gsons;
 import kr.rvs.kkutu.util.Validate;
 
 import java.util.List;

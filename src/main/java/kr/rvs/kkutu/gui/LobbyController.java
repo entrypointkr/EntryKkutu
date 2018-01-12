@@ -5,11 +5,10 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import kr.rvs.kkutu.game.Profile;
 import kr.rvs.kkutu.game.User;
-import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.game.room.RoomData;
 import kr.rvs.kkutu.network.LobbyPacketManager;
-import kr.rvs.kkutu.network.handler.LobbyChatHandler;
 import kr.rvs.kkutu.network.handler.ErrorHandler;
+import kr.rvs.kkutu.network.handler.LobbyChatHandler;
 import kr.rvs.kkutu.network.handler.RoomJoinHandler;
 import kr.rvs.kkutu.network.handler.UpdateHandler;
 

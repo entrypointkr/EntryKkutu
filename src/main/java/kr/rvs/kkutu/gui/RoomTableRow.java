@@ -1,7 +1,6 @@
 package kr.rvs.kkutu.gui;
 
 import javafx.scene.control.TableRow;
-import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.game.room.RoomData;
 import kr.rvs.kkutu.network.handler.RoomJoinHandler;
 

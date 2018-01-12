@@ -13,7 +13,6 @@ import kr.rvs.kkutu.network.packet.in.ConnectPacket;
 import kr.rvs.kkutu.network.packet.in.DisconnectPacket;
 import kr.rvs.kkutu.network.packet.in.RoomPacket;
 import kr.rvs.kkutu.network.packet.in.WelcomePacket;
-import kr.rvs.kkutu.util.Static;
 
 public class UpdateHandler implements PacketHandler {
     @Override

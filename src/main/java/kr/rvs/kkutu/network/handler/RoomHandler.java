@@ -1,6 +1,5 @@
 package kr.rvs.kkutu.network.handler;
 
-import kr.rvs.kkutu.EntryKkutu;
 import kr.rvs.kkutu.game.User;
 import kr.rvs.kkutu.game.holder.UserHolder;
 import kr.rvs.kkutu.game.room.Room;

@@ -5,7 +5,6 @@ import kr.rvs.kkutu.EntryKkutu;
 import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.game.room.RoomData;
 import kr.rvs.kkutu.gui.LobbyController;
-import kr.rvs.kkutu.util.Static;
 
 import java.util.Map;
 import java.util.Optional;
