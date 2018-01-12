@@ -14,6 +14,7 @@ import kr.rvs.kkutu.game.room.RoomPlayer;
 import kr.rvs.kkutu.network.PacketManager;
 import kr.rvs.kkutu.network.handler.ChatHandler;
 import kr.rvs.kkutu.network.handler.ErrorHandler;
+import kr.rvs.kkutu.network.handler.KickHandler;
 import kr.rvs.kkutu.network.handler.RoomHandler;
 
 import java.io.IOException;
@@ -50,7 +51,8 @@ public class RoomController implements Initializable, Chatable {
         manager.addHandler(
                 chatHandler,
                 new RoomHandler(room),
-                ErrorHandler.get()
+                ErrorHandler.get(),
+                new KickHandler("GUEST4891", "GUEST4302")
         );
         chatField.setOnKeyPressed(chatHandler);
         chatField.focusedProperty().addListener(new InstantTextCleaner(chatField));

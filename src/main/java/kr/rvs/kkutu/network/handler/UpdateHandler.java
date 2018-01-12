@@ -7,6 +7,7 @@ import kr.rvs.kkutu.game.holder.UserHolder;
 import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.gui.LobbyController;
 import kr.rvs.kkutu.network.PacketHandler;
+import kr.rvs.kkutu.network.PacketManager;
 import kr.rvs.kkutu.network.packet.Packet;
 import kr.rvs.kkutu.network.packet.in.ConnectPacket;
 import kr.rvs.kkutu.network.packet.in.DisconnectPacket;
@@ -16,7 +17,7 @@ import kr.rvs.kkutu.util.Static;
 
 public class UpdateHandler implements PacketHandler {
     @Override
-    public void handle(Packet packet) {
+    public void handle(PacketManager manager, Packet packet) {
         if (packet instanceof ConnectPacket) {
             ConnectPacket connectPacket = ((ConnectPacket) packet);
             UserHolder.join(connectPacket.getUser());

@@ -20,20 +20,11 @@ import java.net.URI;
 
 public class RoomJoinHandler implements PacketHandler, EventHandler<MouseEvent> {
     @Override
-    public void handle(Packet packet) {
+    public void handle(PacketManager manager, Packet packet) {
         if (packet instanceof PreRoomPacket) {
             PreRoomPacket preRoomPacket = ((PreRoomPacket) packet);
             Room room = RoomHolder.getOrThrow(preRoomPacket.getId());
-            PacketManager packetManager = new PacketManager();
-            room.setPacketManager(packetManager);
-            new WebSocket(
-                    "Room",
-                    URI.create(String.format("wss://ws.kkutu.co.kr:%s/2c727562e48cc83922ee306e9af3ed957500ed12833a0d4e8c8a0127430d219ac015a9670ceb4905e4f5abe8a422dc56&%s&%s",
-                            8495 + preRoomPacket.getChannel(), preRoomPacket.getChannel(), preRoomPacket.getId())),
-                    KkutuKoreaPacketFactory.get(),
-                    packetManager
-            ).start();
-            EntryKkutu.showRoom(room, e -> packetManager.close());
+            EntryKkutu.initRoom(preRoomPacket.getChannel(), room);
         }
     }
 

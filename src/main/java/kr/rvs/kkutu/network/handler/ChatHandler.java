@@ -22,7 +22,7 @@ public class ChatHandler implements PacketHandler, EventHandler<KeyEvent> {
     }
 
     @Override
-    public void handle(Packet packet) {
+    public void handle(PacketManager manager, Packet packet) {
         if (packet instanceof ChatInPacket) {
             ChatInPacket chatPacket = ((ChatInPacket) packet);
             chatable.chat(chatPacket.getProfile(), chatPacket.getMessage());
