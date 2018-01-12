@@ -1,4 +1,4 @@
-package kr.rvs.kkutu.network.packet.impl.out;
+package kr.rvs.kkutu.network.packet.out;
 
 import kr.rvs.kkutu.network.packet.Packet;
 

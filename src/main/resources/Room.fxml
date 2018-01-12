@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER_RIGHT">
             <Pane HBox.hgrow="ALWAYS" />
@@ -10,8 +20,12 @@
         </ToolBar>
     </top>
     <center>
-        <SplitPane dividerPositions="0.6927374301675978" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
-            <TilePane fx:id="userTilePane" prefHeight="200.0" prefWidth="200.0" />
+        <SplitPane dividerPositions="0.7094972067039106" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+         <StackPane prefHeight="150.0" prefWidth="200.0">
+            <children>
+                  <TilePane fx:id="userTilePane" prefHeight="200.0" prefWidth="200.0" />
+            </children>
+         </StackPane>
             <VBox prefHeight="200.0" prefWidth="100.0">
                 <TextArea fx:id="chatArea" editable="false" prefHeight="200.0" prefWidth="598.0" VBox.vgrow="ALWAYS" />
                 <TextField fx:id="chatField" text="메세지..." />

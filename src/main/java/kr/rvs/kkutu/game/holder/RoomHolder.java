@@ -1,6 +1,7 @@
 package kr.rvs.kkutu.game.holder;
 
 import javafx.collections.ObservableList;
+import kr.rvs.kkutu.EntryKkutu;
 import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.gui.LobbyController;
 import kr.rvs.kkutu.util.Static;
@@ -14,7 +15,7 @@ public class RoomHolder {
     private static final Map<String, Room> ROOM_MAP = new ConcurrentHashMap<>();
 
     private static void callback(Consumer<ObservableList<Room>> consumer) {
-        Static.runOnMain(() -> consumer.accept(LobbyController.get().roomView.getItems()));
+        EntryKkutu.runOnMain(() -> consumer.accept(LobbyController.get().roomView.getItems()));
     }
 
     public static void put(Room room) {

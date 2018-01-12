@@ -8,6 +8,7 @@ import kr.rvs.kkutu.game.User;
 import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.network.LobbyPacketManager;
 import kr.rvs.kkutu.network.handler.ChatHandler;
+import kr.rvs.kkutu.network.handler.ErrorHandler;
 import kr.rvs.kkutu.network.handler.RoomJoinHandler;
 import kr.rvs.kkutu.network.handler.UpdateHandler;
 
@@ -69,7 +70,8 @@ public class LobbyController implements Initializable, Chatable {
         LobbyPacketManager.get().addHandler(
                 chatHandler,
                 updateHandler,
-                roomHandler
+                roomHandler,
+                ErrorHandler.get()
         );
         chatField.setOnKeyPressed(chatHandler);
         roomView.setRowFactory(table -> new RoomTableRow(roomHandler));

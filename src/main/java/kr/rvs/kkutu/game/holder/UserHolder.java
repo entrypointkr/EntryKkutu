@@ -1,6 +1,7 @@
 package kr.rvs.kkutu.game.holder;
 
 import javafx.collections.ObservableList;
+import kr.rvs.kkutu.EntryKkutu;
 import kr.rvs.kkutu.game.User;
 import kr.rvs.kkutu.gui.LobbyController;
 import kr.rvs.kkutu.util.Static;
@@ -14,7 +15,7 @@ public class UserHolder {
     private static final Map<String, User> USER_MAP = new ConcurrentHashMap<>();
 
     private static void callback(Consumer<ObservableList<User>> consumer) {
-        Static.runOnMain(() -> consumer.accept(LobbyController.get().userView.getItems()));
+        EntryKkutu.runOnMain(() -> consumer.accept(LobbyController.get().userView.getItems()));
     }
 
     public static void join(User user) {

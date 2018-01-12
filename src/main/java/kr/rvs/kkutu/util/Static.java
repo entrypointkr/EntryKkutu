@@ -14,14 +14,6 @@ public class Static {
         Logger.getAnonymousLogger().log(Level.WARNING, throwable, throwable::getMessage);
     }
 
-    public static void runOnMain(Runnable runnable) {
-        if (Platform.isFxApplicationThread()) {
-            runnable.run();
-        } else {
-            Platform.runLater(runnable);
-        }
-    }
-
     private Static() {
     }
 }

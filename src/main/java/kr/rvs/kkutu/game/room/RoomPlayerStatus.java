@@ -6,11 +6,9 @@ import javafx.scene.text.Text;
 import java.util.function.Consumer;
 
 public enum RoomPlayerStatus {
-
     MASTER(text -> {
         text.setText("방장");
         text.setFill(Color.RED);
-
     }),
     WAIT(text -> {
         text.setText("대기");

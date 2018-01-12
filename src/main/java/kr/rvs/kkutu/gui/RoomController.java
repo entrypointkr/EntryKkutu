@@ -7,12 +7,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.TilePane;
+import kr.rvs.kkutu.EntryKkutu;
 import kr.rvs.kkutu.game.Profile;
 import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.game.room.RoomPlayer;
 import kr.rvs.kkutu.network.PacketManager;
 import kr.rvs.kkutu.network.handler.ChatHandler;
-import kr.rvs.kkutu.util.Static;
+import kr.rvs.kkutu.network.handler.ErrorHandler;
+import kr.rvs.kkutu.network.handler.RoomHandler;
 
 import java.io.IOException;
 import java.net.URL;
@@ -45,7 +47,11 @@ public class RoomController implements Initializable, Chatable {
         PacketManager manager = room.getPacketManager();
         ChatHandler chatHandler = new ChatHandler(this, manager);
 
-        manager.addHandler(chatHandler);
+        manager.addHandler(
+                chatHandler,
+                new RoomHandler(room),
+                ErrorHandler.get()
+        );
         chatField.setOnKeyPressed(chatHandler);
         chatField.focusedProperty().addListener(new InstantTextCleaner(chatField));
 
@@ -54,7 +60,7 @@ public class RoomController implements Initializable, Chatable {
     }
 
     public void join(RoomPlayer player) {
-        Static.runOnMain(() -> {
+        EntryKkutu.runOnMain(() -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/part/RoomUserTile.fxml"));
                 RoomPlayerTileController tile = new RoomPlayerTileController(player, room);
@@ -70,7 +76,7 @@ public class RoomController implements Initializable, Chatable {
     }
 
     public void quit(String id) {
-        Static.runOnMain(() -> userTilePane.getChildren().removeIf(node ->
+        EntryKkutu.runOnMain(() -> userTilePane.getChildren().removeIf(node ->
                 id.equals(node.getProperties().get("id"))));
     }
 }
