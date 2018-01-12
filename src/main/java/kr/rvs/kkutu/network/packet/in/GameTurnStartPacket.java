@@ -5,8 +5,10 @@ import kr.rvs.kkutu.network.packet.ReadablePacket;
 
 public class GameTurnStartPacket implements ReadablePacket {
     private char startChar;
+    private char subChar;
     private int roundTime;
     private int turnTime;
+    private int turn;
 
     @Override
     public String type() {
@@ -16,12 +18,20 @@ public class GameTurnStartPacket implements ReadablePacket {
     @Override
     public void read(JsonObject json) {
         this.startChar = json.get("char").getAsCharacter();
+        if (json.has("subChar")) {
+            this.subChar = json.get("subChar").getAsCharacter();
+        }
         this.roundTime = json.get("roundTime").getAsInt();
         this.turnTime = json.get("turnTime").getAsInt();
+        this.turn = json.get("turn").getAsInt();
     }
 
     public char getStartChar() {
         return startChar;
+    }
+
+    public char getSubChar() {
+        return subChar;
     }
 
     public int getRoundTime() {
@@ -30,5 +40,9 @@ public class GameTurnStartPacket implements ReadablePacket {
 
     public int getTurnTime() {
         return turnTime;
+    }
+
+    public int getTurn() {
+        return turn;
     }
 }

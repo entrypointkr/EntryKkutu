@@ -12,16 +12,13 @@ import kr.rvs.kkutu.game.Profile;
 import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.game.room.RoomPlayer;
 import kr.rvs.kkutu.network.PacketManager;
-import kr.rvs.kkutu.network.handler.ChatHandler;
-import kr.rvs.kkutu.network.handler.ErrorHandler;
-import kr.rvs.kkutu.network.handler.KickHandler;
-import kr.rvs.kkutu.network.handler.RoomHandler;
+import kr.rvs.kkutu.network.handler.*;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RoomController implements Initializable, Chatable {
+public class RoomController implements Initializable {
     private final Room room;
     public Button readyButton;
     public TilePane userTilePane;
@@ -32,27 +29,24 @@ public class RoomController implements Initializable, Chatable {
         this.room = room;
     }
 
-    @Override
-    public void chat(Profile profile, String message) {
-        chat(String.format("%s: %s", profile.getNick(), message));
-    }
-
-    @Override
     public void chat(String message) {
         chatArea.appendText(message);
         chatArea.appendText("\n");
     }
 
+    public void chat(Profile profile, String message) {
+        chat(String.format("%s: %s", profile.getNick(), message));
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         PacketManager manager = room.getPacketManager();
-        ChatHandler chatHandler = new ChatHandler(this, manager);
+        RoomChatHandler chatHandler = new RoomChatHandler(this);
 
         manager.addHandler(
                 chatHandler,
                 new RoomHandler(room),
-                ErrorHandler.get(),
-                new KickHandler("GUEST4891", "GUEST4302")
+                ErrorHandler.get()
         );
         chatField.setOnKeyPressed(chatHandler);
         chatField.focusedProperty().addListener(new InstantTextCleaner(chatField));
@@ -80,5 +74,16 @@ public class RoomController implements Initializable, Chatable {
     public void quit(String id) {
         EntryKkutu.runOnMain(() -> userTilePane.getChildren().removeIf(node ->
                 id.equals(node.getProperties().get("id"))));
+    }
+
+    public void setPlayers(Iterable<RoomPlayer> players) {
+        EntryKkutu.runOnMain(() -> {
+            userTilePane.getChildren().clear();
+            players.forEach(this::join);
+        });
+    }
+
+    public Room getRoom() {
+        return room;
     }
 }

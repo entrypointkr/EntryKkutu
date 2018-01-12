@@ -1,5 +1,6 @@
 package kr.rvs.kkutu.util;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -9,8 +10,6 @@ import java.util.List;
 import java.util.function.Function;
 
 public class Gsons {
-    private static final JsonParser PARSER = new JsonParser();
-
     @SuppressWarnings("unchecked")
     public static <T> List<T> remapJsonArray(JsonArray array, Function<JsonElement, T> mapper) {
         List<T> ret = new ArrayList<>(array.size());
@@ -20,11 +19,6 @@ public class Gsons {
         }
         return ret;
     }
-
-    public static JsonParser getParser() {
-        return PARSER;
-    }
-
 
     private Gsons() {
     }

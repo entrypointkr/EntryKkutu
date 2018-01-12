@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import kr.rvs.kkutu.game.Profile;
 import kr.rvs.kkutu.gui.RoomController;
 import kr.rvs.kkutu.network.PacketManager;
+import kr.rvs.kkutu.network.packet.out.ChatOutPacket;
 import kr.rvs.kkutu.network.packet.out.RoomReadyPacket;
 import kr.rvs.kkutu.util.Gsons;
 
@@ -15,7 +16,7 @@ public class Room {
     private String title;
     private boolean password;
     private int limit;
-    private int mode;
+    private RoomMode mode;
     private int round;
     private int time;
     private String master;
@@ -47,7 +48,7 @@ public class Room {
         this.title = title;
         this.password = password;
         this.limit = limit;
-        this.mode = mode;
+        this.mode = RoomMode.values()[mode];
         this.round = round;
         this.time = time;
         this.master = master;
@@ -56,12 +57,21 @@ public class Room {
         players.forEach(player -> playerMap.put(player.getId(), player));
     }
 
-    public void chat(Profile profile, String message) {
-        controller.chat(profile, message);
+    public RoomController getController() {
+        return controller;
+    }
+
+    public void sendChat(String message) {
+        packetManager.sendPacket(new ChatOutPacket(message, isIngame()));
     }
 
     public Optional<RoomPlayer> getPlayer(String id) {
         return Optional.ofNullable(playerMap.get(id));
+    }
+
+    public RoomPlayer getPlayer(int index) {
+        List<RoomPlayer> list = new ArrayList<>(playerMap.values());
+        return list.get(index);
     }
 
     public void update(Room room) {
@@ -76,24 +86,35 @@ public class Room {
 
         this.playerMap.clear();
         this.playerMap.putAll(room.playerMap);
+        refresh();
     }
 
-    public void join(RoomPlayer player) {
-        controller.join(player);
-        playerMap.put(player.getId(), player);
+    public void refresh() {
+        if (controller != null) {
+            controller.setPlayers(playerMap.values());
+        }
     }
 
-    public void quit(String id) {
-        controller.quit(id);
-        playerMap.remove(id);
+    public int getPlayerAmount() {
+        return playerMap.size();
     }
+
+//    public void join(RoomPlayer player) {
+//        controller.join(player);
+//        playerMap.put(player.getId(), player);
+//    }
+//
+//    public void quit(String id) {
+//        controller.quit(id);
+//        playerMap.remove(id);
+//    }
 
     public void ready() {
         packetManager.sendPacket(new RoomReadyPacket());
     }
 
     public boolean isJoinable() {
-        return !isIngame() && playerMap.size() < limit;
+        return !isIngame() && getPlayerAmount() < limit;
     }
 
     public boolean isEmpty() {
@@ -132,7 +153,7 @@ public class Room {
         return limit;
     }
 
-    public int getMode() {
+    public RoomMode getMode() {
         return mode;
     }
 

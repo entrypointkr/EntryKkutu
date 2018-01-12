@@ -1,15 +1,16 @@
 package kr.rvs.kkutu;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import kr.rvs.kkutu.game.IdentityProvider;
+import kr.rvs.kkutu.game.Profile;
 import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.gui.LobbyController;
 import kr.rvs.kkutu.gui.RoomController;
@@ -18,7 +19,6 @@ import kr.rvs.kkutu.network.PacketManager;
 import kr.rvs.kkutu.network.handler.ErrorHandler;
 import kr.rvs.kkutu.network.impl.KkutuKoreaPacketFactory;
 import kr.rvs.kkutu.network.netty.WebSocket;
-import kr.rvs.kkutu.util.Gsons;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,15 +26,29 @@ import java.io.InputStreamReader;
 import java.net.URI;
 
 public class EntryKkutu extends Application {
+    private static final String ADDRESS = "wss://ws.kkutu.co.kr:%s/2c727562e48cc83922ee306e9af3ed957500ed12833a0d4e8c8a0127430d219ac015a9670ceb4905e4f5abe8a422dc56";
     private static final JsonObject lang;
+    private static Profile myProfile;
 
     static {
         InputStream in = ErrorHandler.class.getResourceAsStream("/lang/ko_kr.json");
-        lang = Gsons.getParser().parse(new InputStreamReader(in)).getAsJsonObject();
+        lang = new JsonParser().parse(new InputStreamReader(in)).getAsJsonObject();
     }
 
     public static JsonObject getLang() {
         return lang;
+    }
+
+    public static void initMyProfile(Profile profile) {
+        myProfile = profile;
+    }
+
+    public static Profile getMyProfile() {
+        return myProfile;
+    }
+
+    public static boolean isMe(IdentityProvider provider) {
+        return provider.getId().equals(myProfile.getId());
     }
 
     public static void initRoom(int channel, Room room) {
@@ -62,8 +76,7 @@ public class EntryKkutu extends Application {
 
                 new WebSocket(
                         "Room",
-                        URI.create(String.format("wss://ws.kkutu.co.kr:%s/2c727562e48cc83922ee306e9af3ed957500ed12833a0d4e8c8a0127430d219ac015a9670ceb4905e4f5abe8a422dc56&%s&%s",
-                                8495 + channel, channel, room.getId())),
+                        URI.create(String.format(ADDRESS, 8495 + channel) + String.format("&%s&%s", channel, room.getId())),
                         KkutuKoreaPacketFactory.get(),
                         packetManager,
                         () -> EntryKkutu.runOnMain(stage::close),
@@ -105,7 +118,7 @@ public class EntryKkutu extends Application {
 
         WebSocket client = new WebSocket(
                 "Lobby",
-                URI.create("wss://ws.kkutu.co.kr:8080/2c727562e48cc83922ee306e9af3ed957500ed12833a0d4e8c8a0127430d219ac015a9670ceb4905e4f5abe8a422dc56"),
+                URI.create(String.format(ADDRESS, 8080)),
                 KkutuKoreaPacketFactory.get(),
                 LobbyPacketManager.get()
         );

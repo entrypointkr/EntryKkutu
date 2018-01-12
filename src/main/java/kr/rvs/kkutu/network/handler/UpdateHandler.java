@@ -38,8 +38,10 @@ public class UpdateHandler implements PacketHandler {
                     UserHolder.join(User.of(entry.getValue().getAsJsonObject())));
             welcomePacket.getRooms().entrySet().forEach(entry ->
                     RoomHolder.put(Room.of(entry.getValue().getAsJsonObject())));
-            EntryKkutu.runOnMain(() -> LobbyController.get().myProfileInit(
-                    UserHolder.getOrThrow(welcomePacket.getId())));
+
+            User user = UserHolder.getOrThrow(welcomePacket.getId());
+            EntryKkutu.runOnMain(() -> LobbyController.get().myProfileInit(user));
+            EntryKkutu.initMyProfile(user.getProfile());
         }
     }
 }

@@ -32,7 +32,7 @@ public class RoomJoinHandler implements PacketHandler, EventHandler<MouseEvent> 
     public void handle(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY
                 && event.getClickCount() % 2 == 0) {
-            Room room = LobbyController.get().roomView.getSelectionModel().getSelectedItem();
+            Room room = LobbyController.get().roomView.getSelectionModel().getSelectedItem().getRoom();
             LobbyPacketManager.get().sendPacket(new RoomEnterPacket(room.getId()));
         }
     }
