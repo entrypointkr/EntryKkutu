@@ -186,7 +186,7 @@ public class Room {
 
     @Override
     public String toString() {
-        return getTitle() + '#' + getId();
+        return '#' + getId() + ' ' + getTitle();
     }
 
     @Override
