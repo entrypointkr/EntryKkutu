@@ -20,23 +20,53 @@ import kr.rvs.kkutu.network.handler.ErrorHandler;
 import kr.rvs.kkutu.network.impl.KkutuKoreaPacketFactory;
 import kr.rvs.kkutu.network.netty.WebSocket;
 
-import java.io.IOException;
+import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URL;
 
 public class EntryKkutu extends Application {
-    private static final String ADDRESS = "wss://ws.kkutu.co.kr:%s/2c727562e48cc83922ee306e9af3ed957500ed12833a0d4e8c8a0127430d219ac015a9670ceb4905e4f5abe8a422dc56";
-    private static final JsonObject lang;
+    private static final String ADDRESS = "https://kkutu.co.kr/?server=0";
+    private static final URI WS_ADDRESS = getAddressFromWeb();
+    private static final JsonObject LANG = readLang();
     private static Profile myProfile;
 
-    static {
+    private static JsonObject readLang() {
         InputStream in = ErrorHandler.class.getResourceAsStream("/lang/ko_kr.json");
-        lang = new JsonParser().parse(new InputStreamReader(in)).getAsJsonObject();
+        return new JsonParser().parse(new InputStreamReader(in)).getAsJsonObject();
+    }
+
+    private static URI getAddressFromWeb() {
+        try {
+            URL url = new URL(ADDRESS);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; ko) EntryKKuTu");
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.setRequestProperty("Content-Language", "ko-KR");
+            conn.setRequestMethod("GET");
+
+            try (BufferedReader in = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()))) {
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                String tag = "<span id=\"URL\">";
+                String parse = response.substring(response.indexOf(tag));
+
+                return URI.create(parse.substring(tag.length(), parse.indexOf("</span>")));
+            }
+        } catch (Exception ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
     public static JsonObject getLang() {
-        return lang;
+        return LANG;
     }
 
     public static void initMyProfile(Profile profile) {
@@ -76,13 +106,21 @@ public class EntryKkutu extends Application {
 
                 new WebSocket(
                         "Room",
-                        URI.create(String.format(ADDRESS, 8495 + channel) + String.format("&%s&%s", channel, room.getId())),
+                        new URI(
+                                WS_ADDRESS.getScheme(),
+                                WS_ADDRESS.getUserInfo(),
+                                WS_ADDRESS.getHost(),
+                                8495 + channel,
+                                WS_ADDRESS.getPath() + String.format("&%s&%s", channel, room.getId()),
+                                WS_ADDRESS.getQuery(),
+                                WS_ADDRESS.getFragment()
+                        ),
                         KkutuKoreaPacketFactory.get(),
                         packetManager,
                         () -> EntryKkutu.runOnMain(stage::close),
                         true
                 ).start();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new IllegalStateException(e);
             }
         });
@@ -118,7 +156,7 @@ public class EntryKkutu extends Application {
 
         WebSocket client = new WebSocket(
                 "Lobby",
-                URI.create(String.format(ADDRESS, 8080)),
+                WS_ADDRESS,
                 KkutuKoreaPacketFactory.get(),
                 LobbyPacketManager.get()
         );
