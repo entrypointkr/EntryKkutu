@@ -4,10 +4,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import kr.rvs.kkutu.game.IdentityProvider;
 import kr.rvs.kkutu.game.holder.UserHolder;
+import kr.rvs.kkutu.gui.GamePlayerTileController;
 import kr.rvs.kkutu.gui.RoomPlayerTileController;
 
 public abstract class RoomPlayer implements IdentityProvider {
-    private RoomPlayerTileController tileController;
+    private RoomPlayerTileController lobbyTileController;
+    private GamePlayerTileController gameTileController;
     private boolean ready = false;
 
     private static RoomPlayer get(String id) {
@@ -27,10 +29,12 @@ public abstract class RoomPlayer implements IdentityProvider {
     }
 
     public void setTileController(RoomPlayerTileController tileController) {
-        this.tileController = tileController;
+        this.lobbyTileController = tileController;
     }
 
     public abstract String getName();
+
+    public abstract int getScore();
 
     public boolean isReady() {
         return ready;
@@ -38,8 +42,8 @@ public abstract class RoomPlayer implements IdentityProvider {
 
     public void setReady(boolean ready) {
         setReady0(ready);
-        if (tileController != null) {
-            tileController.refreshStatus();
+        if (lobbyTileController != null) {
+            lobbyTileController.refreshStatus();
         }
     }
 

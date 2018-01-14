@@ -6,8 +6,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import kr.rvs.kkutu.EntryKkutu;
+import kr.rvs.kkutu.game.GameProcessorFactory;
 import kr.rvs.kkutu.game.Profile;
 import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.game.room.RoomPlayer;
@@ -15,20 +17,25 @@ import kr.rvs.kkutu.network.PacketManager;
 import kr.rvs.kkutu.network.handler.ErrorHandler;
 import kr.rvs.kkutu.network.handler.RoomChatHandler;
 import kr.rvs.kkutu.network.handler.RoomHandler;
+import kr.rvs.kkutu.util.Static;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 
 public class RoomController implements Initializable {
     private final Room room;
+    private final GameProcessor processor;
     public Button readyButton;
     public TilePane userTilePane;
     public TextArea chatArea;
     public TextField chatField;
+    public StackPane stackPane;
 
     public RoomController(Room room) {
         this.room = room;
+        this.processor = room.getMode().getProcessorFactory().create(this);
     }
 
     public void chat(String message) {
@@ -40,16 +47,35 @@ public class RoomController implements Initializable {
         chat(String.format("%s: %s", profile.getNick(), message));
     }
 
+    public void update() {
+        processor.update(room);
+        setPlayers(room.getPlayers());
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         PacketManager manager = room.getPacketManager();
         RoomChatHandler chatHandler = new RoomChatHandler(this);
+        GameProcessorFactory factory = room.getMode().getProcessorFactory();
+
+        // GameProcessor
+        FXMLLoader loader = new FXMLLoader(factory.fxmlUrl());
+        loader.setController(processor);
+        try {
+            Node node = loader.load();
+            node.setVisible(false);
+            stackPane.getChildren().add(node);
+        } catch (Exception e) {
+            Static.log(Level.WARNING, "GameProcessor can't load.");
+        }
 
         manager.addHandler(
                 chatHandler,
                 new RoomHandler(room),
-                ErrorHandler.get()
+                ErrorHandler.get(),
+                processor
         );
+
         chatField.setOnKeyPressed(chatHandler);
         chatField.focusedProperty().addListener(new InstantTextCleaner(chatField));
 

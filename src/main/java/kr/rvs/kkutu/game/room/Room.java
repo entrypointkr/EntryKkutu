@@ -21,6 +21,7 @@ public class Room {
     private String master;
     private Map<String, RoomPlayer> playerMap = Collections.synchronizedMap(new LinkedHashMap<>());
     private boolean ingame;
+    private RoomGame game;
 
     private RoomController controller;
     private PacketManager packetManager;
@@ -37,11 +38,12 @@ public class Room {
                 json.get("time").getAsInt(),
                 json.has("master") ? json.get("master").getAsString() : "null",
                 Gsons.remapJsonArray(json.get("players").getAsJsonArray(), RoomPlayer::get),
-                json.get("gaming").getAsBoolean()
+                json.get("gaming").getAsBoolean(),
+                RoomGame.of(json.get("game").getAsJsonObject())
         );
     }
 
-    public Room(String id, String channel, String title, boolean password, int limit, int mode, int round, int time, String master, Collection<RoomPlayer> players, boolean ingame) {
+    public Room(String id, String channel, String title, boolean password, int limit, int mode, int round, int time, String master, Collection<RoomPlayer> players, boolean ingame, RoomGame game) {
         this.id = id;
         this.channel = channel;
         this.title = title;
@@ -52,6 +54,7 @@ public class Room {
         this.time = time;
         this.master = master;
         this.ingame = ingame;
+        this.game = game;
 
         players.forEach(player -> playerMap.put(player.getId(), player));
     }
@@ -60,17 +63,16 @@ public class Room {
         return controller;
     }
 
-    public void sendChat(String message) {
-        packetManager.sendPacket(new ChatOutPacket(message, isIngame()));
+    public void sendChat(String message, boolean relay) {
+        packetManager.sendPacket(new ChatOutPacket(message, relay));
     }
 
     public Optional<RoomPlayer> getPlayer(String id) {
         return Optional.ofNullable(playerMap.get(id));
     }
 
-    public RoomPlayer getPlayer(int index) {
-        List<RoomPlayer> list = new ArrayList<>(playerMap.values());
-        return list.get(index);
+    public RoomPlayer getPlayerOrThrow(String id) {
+        return getPlayer(id).orElseThrow(IllegalStateException::new);
     }
 
     public void update(Room room) {
@@ -82,31 +84,22 @@ public class Room {
         this.time = room.time;
         this.master = room.master;
         this.ingame = room.ingame;
+        this.game = room.game;
 
         this.playerMap.clear();
         this.playerMap.putAll(room.playerMap);
-        refresh();
+        updateController();
     }
 
-    public void refresh() {
+    public void updateController() {
         if (controller != null) {
-            controller.setPlayers(playerMap.values());
+            controller.update();
         }
     }
 
     public int getPlayerAmount() {
         return playerMap.size();
     }
-
-//    public void join(RoomPlayer player) {
-//        controller.join(player);
-//        playerMap.put(player.getId(), player);
-//    }
-//
-//    public void quit(String id) {
-//        controller.quit(id);
-//        playerMap.remove(id);
-//    }
 
     public void ready() {
         packetManager.sendPacket(new RoomReadyPacket());
@@ -172,6 +165,10 @@ public class Room {
         return ingame;
     }
 
+    public RoomGame getGame() {
+        return game;
+    }
+
     public void setController(RoomController controller) {
         this.controller = controller;
     }
@@ -182,6 +179,10 @@ public class Room {
 
     public PacketManager getPacketManager() {
         return packetManager;
+    }
+
+    public Collection<RoomPlayer> getPlayers() {
+        return new ArrayList<>(playerMap.values());
     }
 
     @Override

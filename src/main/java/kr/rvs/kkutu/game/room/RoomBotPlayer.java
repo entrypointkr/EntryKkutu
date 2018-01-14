@@ -31,6 +31,11 @@ public class RoomBotPlayer extends RoomPlayer {
     }
 
     @Override
+    public int getScore() {
+        return 0;
+    }
+
+    @Override
     public boolean isReady() {
         return true;
     }

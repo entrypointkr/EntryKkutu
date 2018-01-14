@@ -16,6 +16,11 @@ public class RoomUnknownPlayer extends RoomPlayer {
         public String getName() {
             return "unknown";
         }
+
+        @Override
+        public int getScore() {
+            return 0;
+        }
     };
     private final String id;
 
@@ -36,6 +41,11 @@ public class RoomUnknownPlayer extends RoomPlayer {
     public String getName() {
         return getPlayer().map(user ->
                 user.getProfile().getNick()).orElse("Unknown");
+    }
+
+    @Override
+    public int getScore() {
+        return 0;
     }
 
     @Override

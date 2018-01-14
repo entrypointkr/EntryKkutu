@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import kr.rvs.kkutu.game.GameProcessorFactory;
 import kr.rvs.kkutu.game.IdentityProvider;
 import kr.rvs.kkutu.game.Profile;
 import kr.rvs.kkutu.game.room.Room;
@@ -29,7 +30,7 @@ import java.net.URL;
 
 public class EntryKkutu extends Application {
     private static final String ADDRESS = "https://kkutu.co.kr/?server=0";
-    private static final URI WS_ADDRESS = getAddressFromWeb();
+    private static final URI WS_ADDRESS = getSocketAddressFromWeb();
     private static final JsonObject LANG = readLang();
     private static Profile myProfile;
 
@@ -38,7 +39,7 @@ public class EntryKkutu extends Application {
         return new JsonParser().parse(new InputStreamReader(in)).getAsJsonObject();
     }
 
-    private static URI getAddressFromWeb() {
+    private static URI getSocketAddressFromWeb() {
         try {
             URL url = new URL(ADDRESS);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -82,20 +83,22 @@ public class EntryKkutu extends Application {
     }
 
     public static void initRoom(int channel, Room room) {
+        GameProcessorFactory factory = room.getMode().getProcessorFactory();
         PacketManager packetManager = new PacketManager();
         room.setPacketManager(packetManager);
 
         EntryKkutu.runOnMain(() -> {
-            FXMLLoader loader = new FXMLLoader(EntryKkutu.class.getResource("/Room.fxml"));
+            FXMLLoader roomLoader = new FXMLLoader(EntryKkutu.class.getResource("/Room.fxml"));
+
             RoomController controller = new RoomController(room);
-            loader.setController(controller);
+            roomLoader.setController(controller);
             room.setController(controller);
 
             int width = 1000;
             int height = 600;
 
             try {
-                Parent root = loader.load();
+                Parent root = roomLoader.load();
                 Stage stage = new Stage();
                 stage.setTitle(room.toString() + " - EntryKkutu");
                 stage.setScene(new Scene(root, width, height));

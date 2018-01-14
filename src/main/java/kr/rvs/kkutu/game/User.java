@@ -10,7 +10,7 @@ public class User extends RoomPlayer implements IdentityProvider {
     private final String id;
     private final Profile profile;
     private final int money;
-    private final Game game;
+    private final UserGame game;
 
     public static User of(JsonObject json) {
         Validate.isTrue(json.has("id") && json.has("profile"), "Malformed user format. " + json.toString());
@@ -18,11 +18,11 @@ public class User extends RoomPlayer implements IdentityProvider {
                 json.get("id").getAsString(),
                 Profile.of(json.get("profile").getAsJsonObject()),
                 json.has("money") ? json.get("money").getAsInt() : 0,
-                Game.of(json.get("game").getAsJsonObject())
+                UserGame.of(json.get("game").getAsJsonObject())
         );
     }
 
-    public User(String id, Profile profile, int money, Game game) {
+    public User(String id, Profile profile, int money, UserGame game) {
         this.id = id;
         this.profile = profile;
         this.money = money;
@@ -42,7 +42,7 @@ public class User extends RoomPlayer implements IdentityProvider {
         return money;
     }
 
-    public Game getGame() {
+    public UserGame getGame() {
         return game;
     }
 
@@ -59,6 +59,11 @@ public class User extends RoomPlayer implements IdentityProvider {
     @Override
     public String getName() {
         return getProfile().getNick();
+    }
+
+    @Override
+    public int getScore() {
+        return 0;
     }
 
     @Override

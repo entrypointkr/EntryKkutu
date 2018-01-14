@@ -3,15 +3,15 @@ package kr.rvs.kkutu.game;
 import com.google.gson.JsonObject;
 import kr.rvs.kkutu.util.Validate;
 
-public class Game {
+public class UserGame {
     private boolean ready = false;
 
-    public static Game of(JsonObject json) {
+    public static UserGame of(JsonObject json) {
         Validate.isTrue(json.has("ready"));
-        return new Game(json.get("ready").getAsBoolean());
+        return new UserGame(json.get("ready").getAsBoolean());
     }
 
-    public Game(boolean ready) {
+    public UserGame(boolean ready) {
         this.ready = ready;
     }
 

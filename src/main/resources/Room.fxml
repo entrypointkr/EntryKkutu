@@ -2,23 +2,25 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+            prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER_RIGHT">
-            <Pane HBox.hgrow="ALWAYS" />
-            <Button fx:id="readyButton" mnemonicParsing="false" text="준비" />
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Button fx:id="readyButton" mnemonicParsing="false" text="준비"/>
         </ToolBar>
     </top>
     <center>
-        <SplitPane dividerPositions="0.7094972067039106" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
-         <StackPane prefHeight="150.0" prefWidth="200.0">
-            <children>
-                  <TilePane fx:id="userTilePane" prefHeight="200.0" prefWidth="200.0" />
-            </children>
-         </StackPane>
+        <SplitPane dividerPositions="0.7094972067039106" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0"
+                   BorderPane.alignment="CENTER">
+            <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0">
+                <children>
+                    <TilePane fx:id="userTilePane" prefHeight="200.0" prefWidth="200.0"/>
+                </children>
+            </StackPane>
             <VBox prefHeight="200.0" prefWidth="100.0">
-                <TextArea fx:id="chatArea" editable="false" prefHeight="200.0" prefWidth="598.0" VBox.vgrow="ALWAYS" />
-                <TextField fx:id="chatField" text="메세지..." />
+                <TextArea fx:id="chatArea" editable="false" prefHeight="200.0" prefWidth="598.0" VBox.vgrow="ALWAYS"/>
+                <TextField fx:id="chatField" text="메세지..."/>
             </VBox>
         </SplitPane>
     </center>

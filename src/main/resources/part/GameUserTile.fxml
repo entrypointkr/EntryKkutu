@@ -14,12 +14,12 @@
             <Image url="@../image/def.png" />
          </image>
       </ImageView>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GUEST0000">
+      <Text fx:id="nickText" strokeType="OUTSIDE" strokeWidth="0.0" text="GUEST0000">
          <font>
             <Font size="22.0" />
          </font>
       </Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="00000">
+      <Text fx:id="scoreText" strokeType="OUTSIDE" strokeWidth="0.0" text="00000">
          <font>
             <Font name="System Bold" size="40.0" />
          </font>

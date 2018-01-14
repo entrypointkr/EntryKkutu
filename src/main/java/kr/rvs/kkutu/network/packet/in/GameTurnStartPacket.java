@@ -5,7 +5,7 @@ import kr.rvs.kkutu.network.packet.ReadablePacket;
 
 public class GameTurnStartPacket implements ReadablePacket {
     private char startChar;
-    private char subChar;
+    private Character subChar;
     private int roundTime;
     private int turnTime;
     private int turn;
@@ -30,7 +30,7 @@ public class GameTurnStartPacket implements ReadablePacket {
         return startChar;
     }
 
-    public char getSubChar() {
+    public Character getSubChar() {
         return subChar;
     }
 
