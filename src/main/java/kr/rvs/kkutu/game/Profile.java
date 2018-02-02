@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import kr.rvs.kkutu.util.Validate;
 
 public class Profile implements IdentityProvider {
+    private static Profile myProfile;
     private final String id;
     private final String nick;
 
@@ -13,6 +14,18 @@ public class Profile implements IdentityProvider {
                 json.get("id").getAsString(),
                 json.get("nick").getAsString()
         );
+    }
+
+    public static void initMyProfile(Profile profile) {
+        myProfile = profile;
+    }
+
+    public static Profile me() {
+        return myProfile;
+    }
+
+    public static boolean isMe(IdentityProvider provider) {
+        return myProfile != null && provider.getId().equals(myProfile.getId());
     }
 
     public Profile(String id, String nick) {
@@ -27,5 +40,9 @@ public class Profile implements IdentityProvider {
 
     public String getNick() {
         return nick;
+    }
+
+    public boolean isMe() {
+        return isMe(this);
     }
 }

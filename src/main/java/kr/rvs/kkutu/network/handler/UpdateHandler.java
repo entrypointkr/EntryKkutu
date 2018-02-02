@@ -1,6 +1,7 @@
 package kr.rvs.kkutu.network.handler;
 
 import kr.rvs.kkutu.EntryKkutu;
+import kr.rvs.kkutu.game.Profile;
 import kr.rvs.kkutu.game.User;
 import kr.rvs.kkutu.game.holder.RoomHolder;
 import kr.rvs.kkutu.game.holder.UserHolder;
@@ -40,7 +41,7 @@ public class UpdateHandler implements PacketHandler {
 
             User user = UserHolder.getOrThrow(welcomePacket.getId());
             EntryKkutu.runOnMain(() -> LobbyController.get().myProfileInit(user));
-            EntryKkutu.initMyProfile(user.getProfile());
+            Profile.initMyProfile(user.getProfile());
         }
     }
 }

@@ -4,7 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import kr.rvs.kkutu.EntryKkutu;
+import kr.rvs.kkutu.game.Profile;
 import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.gui.RoomController;
 import kr.rvs.kkutu.network.PacketHandler;
@@ -34,7 +34,7 @@ public class RoomChatHandler implements PacketHandler, EventHandler<KeyEvent> {
             Room room = controller.getRoom();
             room.sendChat(
                     textField.getText(),
-                    room.getGame().isTurn(EntryKkutu.getMyProfile())
+                    room.getGame().isTurn(Profile.me())
             );
             textField.setText("");
         }

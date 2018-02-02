@@ -10,8 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import kr.rvs.kkutu.game.GameProcessorFactory;
-import kr.rvs.kkutu.game.IdentityProvider;
-import kr.rvs.kkutu.game.Profile;
 import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.gui.LobbyController;
 import kr.rvs.kkutu.gui.RoomController;
@@ -32,7 +30,6 @@ public class EntryKkutu extends Application {
     private static final String ADDRESS = "https://kkutu.co.kr/?server=0";
     private static final URI WS_ADDRESS = getSocketAddressFromWeb();
     private static final JsonObject LANG = readLang();
-    private static Profile myProfile;
 
     private static JsonObject readLang() {
         InputStream in = ErrorHandler.class.getResourceAsStream("/lang/ko_kr.json");
@@ -68,18 +65,6 @@ public class EntryKkutu extends Application {
 
     public static JsonObject getLang() {
         return LANG;
-    }
-
-    public static void initMyProfile(Profile profile) {
-        myProfile = profile;
-    }
-
-    public static Profile getMyProfile() {
-        return myProfile;
-    }
-
-    public static boolean isMe(IdentityProvider provider) {
-        return provider.getId().equals(myProfile.getId());
     }
 
     public static void initRoom(int channel, Room room) {
