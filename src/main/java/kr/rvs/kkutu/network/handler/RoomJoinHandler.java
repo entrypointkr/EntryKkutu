@@ -29,7 +29,14 @@ public class RoomJoinHandler implements PacketHandler, EventHandler<MouseEvent> 
         if (event.getButton() == MouseButton.PRIMARY
                 && event.getClickCount() % 2 == 0) {
             Room room = LobbyController.get().roomView.getSelectionModel().getSelectedItem().getRoom();
-            LobbyPacketManager.get().sendPacket(new RoomEnterPacket(room.getId()));
+            if (room.isPassword()) {
+                EntryKkutu.waitForUserInput(dialog -> {
+                    dialog.setHeaderText(room + " 입장");
+                    dialog.setContentText("비밀번호:");
+                }, input -> LobbyPacketManager.get().sendPacket(new RoomEnterPacket(room.getId(), input)));
+            } else {
+                LobbyPacketManager.get().sendPacket(new RoomEnterPacket(room.getId()));
+            }
         }
     }
 }

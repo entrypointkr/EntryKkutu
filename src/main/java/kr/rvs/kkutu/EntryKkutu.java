@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 import kr.rvs.kkutu.game.GameProcessorFactory;
 import kr.rvs.kkutu.game.room.Room;
@@ -25,6 +26,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.util.function.Consumer;
 
 public class EntryKkutu extends Application {
     private static final String ADDRESS = "https://kkutu.co.kr/?server=0";
@@ -98,7 +100,7 @@ public class EntryKkutu extends Application {
                                 WS_ADDRESS.getScheme(),
                                 WS_ADDRESS.getUserInfo(),
                                 WS_ADDRESS.getHost(),
-                                8495 + channel,
+                                8515 + channel,
                                 WS_ADDRESS.getPath() + String.format("&%s&%s", channel, room.getId()),
                                 WS_ADDRESS.getQuery(),
                                 WS_ADDRESS.getFragment()
@@ -124,6 +126,15 @@ public class EntryKkutu extends Application {
 
     public static void showMessage(Alert.AlertType type, String message) {
         runOnMain(() -> new Alert(type, message).show());
+    }
+
+    public static void waitForUserInput(Consumer<TextInputDialog> modifier,  Consumer<String> callback) {
+        runOnMain(() -> {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("EntryKkutu");
+            modifier.accept(dialog);
+            dialog.showAndWait().ifPresent(callback);
+        });
     }
 
     @Override

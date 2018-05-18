@@ -7,7 +7,12 @@ import kr.rvs.kkutu.game.room.RoomPlayer;
 import kr.rvs.kkutu.network.PacketHandler;
 import kr.rvs.kkutu.network.PacketManager;
 import kr.rvs.kkutu.network.packet.Packet;
-import kr.rvs.kkutu.network.packet.in.*;
+import kr.rvs.kkutu.network.packet.in.GameStartPacket;
+import kr.rvs.kkutu.network.packet.in.GameTurnEndPacket;
+import kr.rvs.kkutu.network.packet.in.GameTurnStartPacket;
+import kr.rvs.kkutu.network.packet.in.RoomJoinPacket;
+import kr.rvs.kkutu.network.packet.in.RoomPlayerUpdatePacket;
+import kr.rvs.kkutu.network.packet.in.RoomQuitPacket;
 
 public class RoomHandler implements PacketHandler {
     private final Room room;
@@ -40,6 +45,7 @@ public class RoomHandler implements PacketHandler {
         else if (packet instanceof GameTurnStartPacket) {
             GameTurnStartPacket startPacket = ((GameTurnStartPacket) packet);
             room.getController().chat("턴: " + startPacket.getTurn());
+            room.getGame().setTurn(startPacket.getTurn());
         } else if (packet instanceof GameTurnEndPacket) {
             GameTurnEndPacket endPacket = ((GameTurnEndPacket) packet);
             room.getController().chat((endPacket.isPass() ? "패스" : "실패"));

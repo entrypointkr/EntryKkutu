@@ -14,6 +14,7 @@ import kr.rvs.kkutu.game.Profile;
 import kr.rvs.kkutu.game.room.Room;
 import kr.rvs.kkutu.game.room.RoomPlayer;
 import kr.rvs.kkutu.network.PacketManager;
+import kr.rvs.kkutu.network.handler.BotHandler;
 import kr.rvs.kkutu.network.handler.ErrorHandler;
 import kr.rvs.kkutu.network.handler.RoomChatHandler;
 import kr.rvs.kkutu.network.handler.RoomHandler;
@@ -39,8 +40,10 @@ public class RoomController implements Initializable {
     }
 
     public void chat(String message) {
-        chatArea.appendText(message);
-        chatArea.appendText("\n");
+        EntryKkutu.runOnMain(() -> {
+            chatArea.appendText(message);
+            chatArea.appendText("\n");
+        });
     }
 
     public void chat(Profile profile, String message) {
@@ -73,7 +76,8 @@ public class RoomController implements Initializable {
                 chatHandler,
                 new RoomHandler(room),
                 ErrorHandler.get(),
-                processor
+                processor,
+                new BotHandler()
         );
 
         chatField.setOnKeyPressed(chatHandler);
